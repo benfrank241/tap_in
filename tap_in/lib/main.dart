@@ -1,6 +1,7 @@
 import 'package:tap_in/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:swipe/swipe.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() async {
@@ -56,6 +57,8 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,9 +67,24 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Welcome to Flutter'),
         ),
-        body: Center(
-          child: _pages.elementAt(_selectedIndex), //New
-        ),
+
+
+        body: Swipe(
+          child: Center(
+            child : _pages.elementAt(_selectedIndex),
+          ),
+          onSwipeRight: () {
+            setState(() {
+              _onItemTapped(_selectedIndex+1);
+            });
+          },
+          onSwipeLeft: () {
+            setState(() {
+              _onItemTapped(_selectedIndex-1);
+            });
+          },
+        ),//New
+
 
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.blue,
