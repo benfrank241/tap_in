@@ -1,8 +1,8 @@
+import 'package:tapin/screens/discover/discover.dart';
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
-
 
 void main() => runApp(new Feed());
 
@@ -30,25 +30,23 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
+
 int _selectedIndex = 1;
 
 class _MyHomePageState extends State<MyHomePage> {
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
 
-      if (index == 0){
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ProfileApp())
-        );
+      if (index == 0) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ProfileApp()));
       }
 
-      if (index == 2){
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ProfileApp())
-            );
-          }
+      if (index == 2) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Discover()));
+      }
     });
   }
 
@@ -58,16 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: new Center(
-          child: Tinder()
-      ),
+      body: new Center(child: Tinder()),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         elevation: 0,
         selectedFontSize: 20,
-        unselectedIconTheme: IconThemeData(color: Colors.purpleAccent[100], size: 30),
+        unselectedIconTheme:
+            IconThemeData(color: Colors.purpleAccent[100], size: 30),
         unselectedItemColor: Colors.purpleAccent[100],
-        selectedIconTheme: IconThemeData(color: Colors.purpleAccent[100], size: 40),
+        selectedIconTheme:
+            IconThemeData(color: Colors.purpleAccent[100], size: 40),
         selectedItemColor: Colors.purpleAccent[100],
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         items: const <BottomNavigationBarItem>[
@@ -80,9 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-
+            icon: Icon(Icons.explore),
+            label: 'Discover',
           ),
         ],
         currentIndex: _selectedIndex,
