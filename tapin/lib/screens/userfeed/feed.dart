@@ -1,6 +1,6 @@
-
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
+import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
 
 
@@ -30,13 +30,25 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
-int _selectedIndex = 0;
+int _selectedIndex = 1;
 
 class _MyHomePageState extends State<MyHomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
+      if (index == 0){
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => ProfileApp())
+        );
+      }
+
+      if (index == 2){
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => ProfileApp())
+            );
+          }
     });
   }
 
