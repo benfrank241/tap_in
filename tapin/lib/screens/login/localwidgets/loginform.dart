@@ -1,12 +1,15 @@
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:tapin/screens/userdash/userdash.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:tapin/services/graphQLConf.dart';
 import "package:tapin/services/queryMutation.dart";
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:image/image.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OurLoginForm extends StatefulWidget {
   @override
@@ -20,7 +23,6 @@ class _OurLoginFormState extends State<OurLoginForm> {
   bool isChecked = false;
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
-  Color logintext = Color.fromARGB(255, 119, 124, 118);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +37,11 @@ class _OurLoginFormState extends State<OurLoginForm> {
             style: TextStyle(fontSize: 18.0),
             cursorColor: Colors.grey,
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.email_outlined, color: logintext),
+              prefixIcon: Icon(Icons.email_outlined,
+                  color: Theme.of(context).primaryColor),
               hintText: "email",
-              hintStyle: TextStyle(fontSize: 18.0, color: logintext),
+              hintStyle: TextStyle(
+                  fontSize: 18.0, color: Theme.of(context).primaryColor),
             ),
           ),
           TextFormField(
@@ -46,9 +50,11 @@ class _OurLoginFormState extends State<OurLoginForm> {
             style: TextStyle(fontSize: 18.0),
             cursorColor: Colors.grey,
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock_outline, color: logintext),
+              prefixIcon: Icon(Icons.lock_outline,
+                  color: Theme.of(context).primaryColor),
               hintText: "password",
-              hintStyle: TextStyle(fontSize: 18.0, color: logintext),
+              hintStyle: TextStyle(
+                  fontSize: 18.0, color: Theme.of(context).primaryColor),
             ),
           ),
           /*RadioListTile(
@@ -81,7 +87,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
                 Text(
                   'remember me',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ],
@@ -95,7 +101,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
               padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12.5),
               child: Text(
                 "login",
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(
+                    color: Theme.of(context).canvasColor, fontSize: 18),
               ),
             ),
             onPressed: () async {
@@ -137,7 +144,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
               // }
 
               if (response.success) {
-                Navigator.pushNamed(context, '/userdash');
+                Navigator.pushNamed(context, '/userfeed');
               } else {
                 if (response.error?.message != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -158,7 +165,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
               padding: EdgeInsets.symmetric(horizontal: 90, vertical: 12.5),
               child: Text(
                 "register",
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(
+                    color: Theme.of(context).canvasColor, fontSize: 18),
               ),
             ),
             onPressed: () {
@@ -177,7 +185,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
               child: Text(
                 'forgot password',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 14,
                   decoration: TextDecoration.underline,
                 ),

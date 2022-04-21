@@ -42,7 +42,7 @@ final String defaultSort = "name_ASC";
 final Iterable<String> sortOptionNames = sortOptions.keys;
 
 final Image headerLogo = new Image(
-    image: new ExactAssetImage('assets/logo4.png'),
+    image: new ExactAssetImage('assets/logo3.png'),
     height: AppBar().preferredSize.height - 30,
     //width: 20.0,
     alignment: FractionalOffset.center);

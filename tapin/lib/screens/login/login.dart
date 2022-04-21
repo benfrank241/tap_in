@@ -6,7 +6,6 @@ class OurLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -21,7 +20,7 @@ class OurLogin extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.all(40.0),
-                  child: Image.asset("assets/logo4.png"),
+                  child: Image.asset("assets/logo3.png"),
                 ),
                 SizedBox(
                   height: 1.0,
