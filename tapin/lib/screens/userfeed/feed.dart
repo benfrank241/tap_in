@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
 
+import '../groupchat/chatMain.dart';
+import '../groupchat/homePage.dart';
+
 
 void main() => runApp(new Feed());
 
@@ -40,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       if (index == 0){
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ProfileApp())
+            MaterialPageRoute(builder: (context) => chatMain())
         );
       }
 
