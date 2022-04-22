@@ -4,13 +4,13 @@ import 'package:flutter_swipable/flutter_swipable.dart';
 // Link to DB
 final List data = [
   {
-    'image': Image.asset("assets/logo3.png"),
+    'image': Image.asset("assets/images/logo3.png"),
   },
   {
-    'image': Image.asset("assets/logo.png"),
+    'image': Image.asset("assets/DiscoverPlaceHolder/car.jpg"),
   },
   {
-    'image': Image.asset("assets/logo3.png"),
+    'image': Image.asset("assets/DiscoverPlaceHolder/tacos.jpg"),
   },
 ];
 
@@ -36,13 +36,16 @@ class _TinderState extends State<Tinder> {
   @override
   Widget build(BuildContext context) {
     // Stack of cards that can be swiped. Set width, height, etc here.
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.7,
-      // Important to keep as a stack to have overlay of cards.
-      child: Stack(
-        children: cards,
-      ),
+    return Center(
+       child: Container(
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.7,
+          // Important to keep as a stack to have overlay of cards.
+          child: Stack(
+              children: cards,
+          ),
+       ),
     );
   }
 }

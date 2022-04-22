@@ -19,7 +19,7 @@ class Feed extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       home: new Center(
-        child: MyHomePage(title: 'Tap-in main feed'),
+        child: MyHomePage(title: ''),
       ),
     );
   }
@@ -38,8 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentIndex = 1;
 
   final screens = [
-    //chat(),
-    Discover(),
+    chatMain(),
     Tinder(),
     Discover(),
   ];

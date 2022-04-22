@@ -28,7 +28,7 @@ class ProfileApp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: NetworkImage('assets/beesechurger.jpg'),
+                        backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
                         radius: 50.0,
                       ),
                       SizedBox(
