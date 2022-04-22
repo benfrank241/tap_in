@@ -15,6 +15,7 @@ import 'screens/userlists/organizations.dart';
 import 'screens/userlists/correspondences.dart';
 import 'screens/userorganization/userorganization.dart';
 import 'screens/userchats/chatScreen.dart';
+import 'screens/discover/discover.dart';
 
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:tapin/services/graphQLConf.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         '/usercorrespondences': (context) => UserCorrespondenceList(),
         '/userorganization': (context) => UserOrganization(),
         '/resetpasswordscreen': (context) => OurPasswordResetScreen(),
+        '/discover': (context) => Discover(),
       },
     );
   }
