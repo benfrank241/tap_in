@@ -4,17 +4,14 @@ import 'package:flutter_swipable/flutter_swipable.dart';
 // Link to DB
 final List data = [
   {
-    'color': Colors.red,
+    'image': Image.asset("assets/logo3.png"),
   },
   {
-    'color': Colors.green,
+    'image': Image.asset("assets/logo.png"),
   },
   {
-    'color': Colors.blue,
+    'image': Image.asset("assets/logo3.png"),
   },
-  {
-    'color': Colors.orange,
-  }
 ];
 
 class Tinder extends StatefulWidget {
@@ -26,16 +23,13 @@ class _TinderState extends State<Tinder> {
   // Dynamically load cards from database
   List<Card> cards = [
     Card(
-      data[0]['color'],
+      data[0]['image'],
     ),
     Card(
-      data[1]['color'],
+      data[1]['image'],
     ),
     Card(
-      data[2]['color'],
-    ),
-    Card(
-      data[3]['color'],
+      data[2]['image'],
     ),
   ];
 
@@ -56,17 +50,18 @@ class _TinderState extends State<Tinder> {
 class Card extends StatelessWidget {
   // Made to distinguish cards
   // Add your own applicable data here
-  final Color color;
-  Card(this.color);
+  final Image image;
+  Card(this.image);
 
   @override
   Widget build(BuildContext context) {
     return Swipable(
       // Set the swipable widget
       child: Container(
-        decoration: BoxDecoration(
+        child: image, height: 1000,
+          decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          color: color,
+            color: Color.fromARGB(255, 190, 190, 190),
         ),
       ),
 
