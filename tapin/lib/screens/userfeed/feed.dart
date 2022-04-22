@@ -3,6 +3,7 @@ import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
+import 'package:tapin/widgets/NavBar.dart';
 
 void main() => runApp(new Feed());
 
@@ -31,24 +32,15 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-int _selectedIndex = 1;
-
 class _MyHomePageState extends State<MyHomePage> {
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
+  int currentIndex = 1;
 
-      if (index == 0) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ProfileApp()));
-      }
-
-      if (index == 2) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Discover()));
-      }
-    });
-  }
+  final screens = [
+    //chat(),
+    Discover(),
+    Tinder(),
+    Discover(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,25 +48,29 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: new Center(child: Tinder()),
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        selectedFontSize: 20,
-        unselectedIconTheme:
-            IconThemeData(color: Colors.purpleAccent[100], size: 30),
-        unselectedItemColor: Colors.purpleAccent[100],
-        selectedIconTheme:
-            IconThemeData(color: Colors.purpleAccent[100], size: 40),
-        selectedItemColor: Colors.purpleAccent[100],
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        items: const <BottomNavigationBarItem>[
+        type: BottomNavigationBarType.fixed,
+        currentIndex: currentIndex,
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.black,
+        iconSize: 20,
+        selectedFontSize: 15,
+        unselectedFontSize: 10,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        onTap: (index) => setState(() => currentIndex = index),
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: 'Chats',
+            label: 'Chat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded),
+            icon: Icon(Icons.home),
             label: 'Feed',
           ),
           BottomNavigationBarItem(
@@ -82,8 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Discover',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     );
   }

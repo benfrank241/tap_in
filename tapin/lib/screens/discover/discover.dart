@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:tapin/screens/userchats/localwidgets/Message.dart';
+import 'package:tapin/screens/userfeed/feed.dart';
+import 'package:tapin/widgets/NavBar.dart';
 
-class Discover extends StatelessWidget {
+class Discover extends StatefulWidget {
+  @override
+  DiscoverState createState() => DiscoverState();
+}
+
+class DiscoverState extends State<Discover> {
   @override
   Widget build(BuildContext context) {
     final List<String> images = [
@@ -15,6 +22,24 @@ class Discover extends StatelessWidget {
       'assets/DiscoverPlaceHolder/tacos.jpg',
       'assets/DiscoverPlaceHolder/xbox.jpg'
     ];
+    int _selectedIndex = 2;
+
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+
+        if (index == 0) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Discover()));
+        }
+
+        if (index == 1) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Feed()));
+        }
+      });
+    }
+
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (context, value) {
