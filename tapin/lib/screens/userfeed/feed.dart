@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
 import 'package:tapin/widgets/NavBar.dart';
+import '../groupchat/chatMain.dart';
+import '../groupchat/homePage.dart';
 
 void main() => runApp(new Feed());
 
