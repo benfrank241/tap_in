@@ -18,7 +18,7 @@ class Feed extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: new Center(
+     home: new Center(
         child: MyHomePage(title: ''),
       ),
     );
@@ -47,9 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: IndexedStack(
+      title: new Text(widget.title),
+       ),
+      body:IndexedStack(
         index: currentIndex,
         children: screens,
       ),

@@ -40,7 +40,7 @@ class _TinderState extends State<Tinder> {
        child: Container(
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.9,
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.75,
           // Important to keep as a stack to have overlay of cards.
           child: Stack(
               children: cards,
