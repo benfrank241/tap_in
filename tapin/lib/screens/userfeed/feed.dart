@@ -6,6 +6,7 @@ import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
 import 'package:tapin/widgets/NavBar.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
+import '../userprofile/profile.dart';
 
 void main() => runApp(new Feed());
 
@@ -19,7 +20,7 @@ class Feed extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
      home: new Center(
-        child: MyHomePage(title: ''),
+        child: MyHomePage(title: 'tap-in'),
       ),
     );
   }
@@ -48,8 +49,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
       title: new Text(widget.title),
-       ),
-      body:IndexedStack(
+        actions: <Widget>[
+        TextButton(
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ProfileApp())
+          );
+        },
+        child: Center(
+          child: CircleAvatar(
+            backgroundColor: Colors.greenAccent[400],
+            radius: 100,
+            backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
+            child: Text(
+              'profile',
+              style: TextStyle(fontSize: 10, color: Colors.white),
+                 ), //Text
+               ), //CircleAvatar
+            ),
+          ),
+        ],
+      ),
+      body: IndexedStack(
         index: currentIndex,
         children: screens,
       ),

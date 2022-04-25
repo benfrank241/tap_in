@@ -108,7 +108,7 @@ class ProfileApp extends StatelessWidget {
 
                                   children: <Widget>[
                                     Text(
-                                      "Beesechurger",
+                                      "Messages",
                                       style: TextStyle(
                                         color: Colors.purpleAccent[100],
                                         fontSize: 20.0,

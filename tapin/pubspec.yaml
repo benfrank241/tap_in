@@ -30,6 +30,7 @@ dependencies:
   image:
   flutter_swipable:
   google_fonts:
+  firebase_core:
 
 
 
