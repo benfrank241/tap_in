@@ -31,8 +31,8 @@ dependencies:
   flutter_swipable:
   google_fonts:
   firebase_core:
-  cloud_firestore:
-
+  cloud_firestore: 2.4.0
+  fluttertoast:
   firebase_auth:
   firebase_analytics:
   firebase_crashlytics:

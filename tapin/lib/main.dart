@@ -7,7 +7,7 @@ import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/utils/OurTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+//iimport 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
 
 import 'screens/login/login.dart';
@@ -25,12 +25,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(
-      // GraphQLProvider(
-      //   client: graphQLConfiguration.client,
-      //   child: CacheProvider(child: MyApp()),
-      // ),
-      MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

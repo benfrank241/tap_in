@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/login/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +18,9 @@ class OurSignUpForm extends StatefulWidget {
 }
 
 class _OurSignUpFormState extends State<OurSignUpForm> {
+  //firebase
+  final _auth = FirebaseAuth.instance;
+
   QueryMutation addMutation = QueryMutation();
   TextEditingController email = TextEditingController();
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
@@ -22,6 +30,8 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
   bool flag = false;
   bool isEnabled = false;
   final _formKey = GlobalKey<FormState>();
+
+  String? errorMessage;
 
   @override
   void initState() {
@@ -212,35 +222,68 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Please enter a valid email')));
     } else if (password.text == confirmPassword.text) {
-      GraphQLClient _client = graphQLConfiguration.clientToQuery();
-      QueryResult result = await _client.mutate(
-        MutationOptions(
-          document: gql(
-            addMutation.signUp(
-              email.text,
-              password.text,
-              email.text,
-              displayName.text,
-            ),
-          ),
-        ),
-      );
-      print(result.exception);
-      if (!result.hasException) {
-        Navigator.of(context).pop();
-      } else {
-        //go back to login
-        if (!flag) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => OurLogin(),
-            ),
-          );
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(
+                email: email.text.trim(), password: password.text.trim())
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
         }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Passwords do not match, please try again')));
     }
+  }
+
+  postDetailsToFirestore() async {
+    //calling firestore
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    //caling usermodel
+
+    UserModel usermodel = UserModel();
+
+    //sending values
+
+    usermodel.email = user!.email;
+    usermodel.uid = user.uid;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(usermodel.tomap());
+    Fluttertoast.showToast(msg: 'Account Created Successfully!');
+
+    Navigator.pushAndRemoveUntil((context),
+        MaterialPageRoute(builder: (context) => OurLogin()), (route) => false);
   }
 }

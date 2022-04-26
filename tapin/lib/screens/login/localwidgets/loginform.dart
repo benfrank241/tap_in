@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:tapin/screens/userdash/userdash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:tapin/screens/userfeed/feed.dart';
 import 'package:tapin/services/graphQLConf.dart';
 import "package:tapin/services/queryMutation.dart";
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -10,6 +12,7 @@ import 'package:image/image.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class OurLoginForm extends StatefulWidget {
   @override
@@ -17,6 +20,7 @@ class OurLoginForm extends StatefulWidget {
 }
 
 class _OurLoginFormState extends State<OurLoginForm> {
+  final _formKey = GlobalKey<FormState>();
   QueryMutation addMutation = QueryMutation();
   TextEditingController email = TextEditingController();
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
@@ -24,9 +28,16 @@ class _OurLoginFormState extends State<OurLoginForm> {
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
 
+  String? errorMessage;
+
+  //FireBase
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Container(
+        child: Form(
+      key: _formKey,
       child: Column(
         children: <Widget>[
           Padding(
@@ -35,6 +46,20 @@ class _OurLoginFormState extends State<OurLoginForm> {
           TextFormField(
             controller: username,
             style: TextStyle(fontSize: 18.0),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return ("Please Enter Your Email");
+              }
+              // reg expression for email validation
+              if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                  .hasMatch(value)) {
+                return ("Please Enter a valid email");
+              }
+              return null;
+            },
+            onSaved: (value) {
+              username.text = value!;
+            },
             cursorColor: Colors.grey,
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.email_outlined,
@@ -49,6 +74,18 @@ class _OurLoginFormState extends State<OurLoginForm> {
             obscureText: true,
             style: TextStyle(fontSize: 18.0),
             cursorColor: Colors.grey,
+            validator: (value) {
+              RegExp regex = new RegExp(r'^.{6,}$');
+              if (value!.isEmpty) {
+                return ("Password is required for login");
+              }
+              if (!regex.hasMatch(value)) {
+                return ("Enter Valid Password(Min. 6 Character)");
+              }
+            },
+            onSaved: (value) {
+              password.text = value!;
+            },
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.lock_outline,
                   color: Theme.of(context).primaryColor),
@@ -106,52 +143,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
               ),
             ),
             onPressed: () async {
-              /*GraphQLClient _client = graphQLConfiguration.clientToQuery();
-              QueryResult result = await _client.mutate(
-                MutationOptions(
-                  document: gql(
-                    addMutation.signIn(
-                      username.text,
-                      password.text,
-                      //email.text.trim(),
-                    ),
-                  ),
-                ),
-              );
-              print(result.data);
-              if (!result.hasException) {
-                Navigator.pushNamed(context, '/userdash');
-              }*/
-
-              // bool emailvalid = RegExp(
-              //         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-              //     .hasMatch(email.text);
-              // if (!emailvalid) {
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //       SnackBar(content: Text('Please enter a valid email')));
-              //   return;
-              // }
-              ParseUser user = ParseUser(username.text, password.text, '');
-              ParseResponse response = await user.login();
-
-              //username.clear();
-              password.clear();
-              // if (user.emailVerified == false) {
-              //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              //       content:
-              //           Text('Please verify your email before signing in')));
-              // //needs to wait here
-              // }
-
-              if (response.success) {
-                Navigator.pushNamed(context, '/userfeed');
-                //Navigator.pushNamed(context, '/');
-              } else {
-                if (response.error?.message != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(response.error!.message)));
-                }
-              }
+              SignIn(username.text.trim(), password.text.trim());
             },
             style: ElevatedButton.styleFrom(
               primary: Theme.of(context).primaryColor,
@@ -196,6 +188,46 @@ class _OurLoginFormState extends State<OurLoginForm> {
               }),
         ],
       ),
-    );
+    ));
+  }
+
+  void SignIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => Feed())),
+                });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
   }
 }
