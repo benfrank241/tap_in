@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:tapin/constants.dart';
 import 'package:tapin/screens/userchats/chatScreen.dart';
 import 'package:tapin/screens/signup/localwidgets/passwordResetScreen.dart';
@@ -19,32 +20,17 @@ import 'screens/discover/discover.dart';
 
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:tapin/services/graphQLConf.dart';
-
-GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final keyApplicationId = kParseApplicationId;
-  final keyClientKey = kParseClientKey;
-  final keyParseServerUrl = kUrl;
-  final keyLiveQueryUrl = kLiveUrl;
-
-  await Parse().initialize(keyApplicationId, keyParseServerUrl,
-      clientKey: keyClientKey,
-      liveQueryUrl: keyLiveQueryUrl,
-      autoSendSessionId: true);
-  /*var firstObject = ParseObject('FirstClass')
-    ..set(
-        'message', 'Hey ! First message from Flutter. Parse is now connected');
-  await firstObject.save();
-
-  print('done');  */ //Uncomment to test connection
+  await Firebase.initializeApp();
   runApp(
-    GraphQLProvider(
-      client: graphQLConfiguration.client,
-      child: CacheProvider(child: MyApp()),
-    ),
-  );
+      // GraphQLProvider(
+      //   client: graphQLConfiguration.client,
+      //   child: CacheProvider(child: MyApp()),
+      // ),
+      MyApp());
 }
 
 class MyApp extends StatelessWidget {
