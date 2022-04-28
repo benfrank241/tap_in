@@ -225,7 +225,9 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
       try {
         await _auth
             .createUserWithEmailAndPassword(
-                email: email.text.trim(), password: password.text.trim())
+              email: email.text.trim(),
+              password: password.text.trim(),
+            )
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e!.message);
@@ -276,6 +278,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
 
     usermodel.email = user!.email;
     usermodel.uid = user.uid;
+    usermodel.username = displayName.text.trim();
 
     await firebaseFirestore
         .collection("users")

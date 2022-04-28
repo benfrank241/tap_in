@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/discover/discover.dart';
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +23,7 @@ class Feed extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.pink,
       ),
-     home: new Center(
+      home: new Center(
         child: MyHomePage(title: 'tap-in'),
       ),
     );
@@ -36,6 +40,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //firebase
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel LoggedInuser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.LoggedInuser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   int currentIndex = 1;
 
   final screens = [
@@ -48,24 +70,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-      title: new Text(widget.title),
+        title: new Text(widget.title),
         actions: <Widget>[
-        TextButton(
-        onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => ProfileApp())
-          );
-        },
-        child: Center(
-          child: CircleAvatar(
-            backgroundColor: Colors.greenAccent[400],
-            radius: 100,
-            backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
-            child: Text(
-              'profile',
-              style: TextStyle(fontSize: 10, color: Colors.white),
-                 ), //Text
-               ), //CircleAvatar
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ProfileApp()));
+            },
+            child: Center(
+              child: CircleAvatar(
+                backgroundColor: Colors.greenAccent[400],
+                radius: 100,
+                backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
+                child: Text(
+                  // put username of curruser
+                  '${LoggedInuser.username}',
+                  style: TextStyle(fontSize: 10, color: Colors.white),
+                ), //Text
+              ), //CircleAvatar
             ),
           ),
         ],

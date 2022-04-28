@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:tapin/screens/userdash/userdash.dart';
@@ -48,13 +49,13 @@ class _OurLoginFormState extends State<OurLoginForm> {
             style: TextStyle(fontSize: 18.0),
             validator: (value) {
               if (value!.isEmpty) {
-                return ("Please Enter Your Email");
+                return ("Please Enter Your Email/Username");
               }
               // reg expression for email validation
-              if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                  .hasMatch(value)) {
-                return ("Please Enter a valid email");
-              }
+              // if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+              //     .hasMatch(value)) {
+              //   return ("Please Enter a valid email");
+              // }
               return null;
             },
             onSaved: (value) {
@@ -194,6 +195,17 @@ class _OurLoginFormState extends State<OurLoginForm> {
   void SignIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(email)) {
+          QuerySnapshot snap = await FirebaseFirestore.instance
+              .collection('users')
+              .where('username', isEqualTo: email)
+              .get();
+          if (snap.docs.isEmpty) {
+            Fluttertoast.showToast(msg: 'Invalid Username/Email!');
+            return;
+          }
+          email = snap.docs[0]['email'];
+        }
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
