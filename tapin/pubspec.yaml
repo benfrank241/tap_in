@@ -44,7 +44,9 @@ dependencies:
   google_sign_in:
   flutter_settings_screens: ^0.3.0-null-safety
   flutter_staggered_grid_view:
-  #font_awesome_flutter:
+  provider:
+
+  font_awesome_flutter:
   #equatable: 
   #meta: 
   #dio: 

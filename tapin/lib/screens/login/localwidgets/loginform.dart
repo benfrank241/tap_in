@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:tapin/screens/userdash/userdash.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,6 @@ import 'package:tapin/screens/userfeed/feed.dart';
 import 'package:tapin/services/graphQLConf.dart';
 import "package:tapin/services/queryMutation.dart";
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:image/image.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -175,18 +175,27 @@ class _OurLoginFormState extends State<OurLoginForm> {
               shape: StadiumBorder(),
             ),
           ),
-          TextButton(
-              child: Text(
-                'forgot password',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 14,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/resetpasswordscreen');
-              }),
+          ElevatedButton.icon(
+            onPressed: () {
+              GoogleLogin();
+            },
+            //icon: ImageIcon(AssetImage('assets/images/google_logo.png')),
+            icon: FaIcon(FontAwesomeIcons.google),
+            label: Text("Sign in with Google"),
+            style: ElevatedButton.styleFrom(),
+          )
+          // TextButton(
+          //     child: Text(
+          //       'forgot password',
+          //       style: TextStyle(
+          //         color: Theme.of(context).primaryColor,
+          //         fontSize: 14,
+          //         decoration: TextDecoration.underline,
+          //       ),
+          //     ),
+          //     onPressed: () {
+          //       Navigator.pushNamed(context, '/resetpasswordscreen');
+          //     }),
         ],
       ),
     ));
@@ -195,6 +204,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
   void SignIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
+        //if email is not a email maybe its username right? RIGHT????
         if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(email)) {
           QuerySnapshot snap = await FirebaseFirestore.instance
               .collection('users')
@@ -241,5 +251,31 @@ class _OurLoginFormState extends State<OurLoginForm> {
         print(error.code);
       }
     }
+  }
+
+  Future GoogleLogin() async {
+    final googleSignIn = GoogleSignIn();
+
+    GoogleSignInAccount? _user;
+
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return;
+
+    _user = googleUser;
+
+    final _googleAuth = await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: _googleAuth.accessToken,
+      idToken: _googleAuth.idToken,
+    );
+
+    await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((value) => {
+              Fluttertoast.showToast(msg: "Login Successful"),
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Feed())),
+            });
   }
 }
