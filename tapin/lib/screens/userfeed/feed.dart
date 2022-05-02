@@ -10,6 +10,7 @@ import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
 import 'package:tapin/widgets/NavBar.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
+import '../posts/add.dart';
 import '../userprofile/profile.dart';
 
 void main() => runApp(new Feed());
@@ -95,6 +96,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: IndexedStack(
         index: currentIndex,
         children: screens,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Add()));
+          },
+          child: Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
