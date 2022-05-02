@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tapin/constants.dart';
 import 'package:tapin/screens/createpost/new_post_view.dart';
+import 'package:tapin/screens/posts/add.dart';
 import 'package:tapin/screens/userchats/chatScreen.dart';
 import 'package:tapin/screens/signup/localwidgets/passwordResetScreen.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
@@ -41,10 +42,11 @@ class MyApp extends StatelessWidget {
       // OurLogin(),
       routes: {
         //'/': (context) => Feed(),
-        '/': (context) => NewPostView(),
-        //'/': (context) => OurLogin(),
+        //'/': (context) => NewPostView(),
+        '/': (context) => OurLogin(),
         '/profileapp': (context) => ProfileApp(),
         '/userfeed': (context) => Feed(),
+        '/add': (context) => Add(),
         '/usersettings': (context) => UserSettings(),
         '/userdash': (context) => UserDash(),
         '/userorganizations': (context) => UserOrganizationList(),
