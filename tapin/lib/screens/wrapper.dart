@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
-
 import 'login/login.dart';
 
 class Wrapper extends StatelessWidget {
