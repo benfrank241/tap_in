@@ -6,8 +6,6 @@ import 'package:tapin/screens/discover/discover.dart';
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
-import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
-import 'package:tapin/widgets/NavBar.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
 import '../userprofile/profile.dart';
@@ -81,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CircleAvatar(
                 backgroundColor: Colors.greenAccent[400],
                 radius: 100,
-                backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
                 child: Text(
                   // put username of curruser
                   '${LoggedInuser.username}',

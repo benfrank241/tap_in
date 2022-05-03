@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:tapin/screens/userchats/localwidgets/Message.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
-import 'package:tapin/widgets/NavBar.dart';
 
 class Discover extends StatefulWidget {
   @override

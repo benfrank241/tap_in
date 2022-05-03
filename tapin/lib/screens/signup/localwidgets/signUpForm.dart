@@ -1,16 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/login/login.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tapin/screens/userchats/localwidgets/Message.dart';
-import 'package:tapin/services/graphQLConf.dart';
-import "package:tapin/services/queryMutation.dart";
 
 class OurSignUpForm extends StatefulWidget {
   @override
@@ -21,9 +14,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
   //firebase
   final _auth = FirebaseAuth.instance;
 
-  QueryMutation addMutation = QueryMutation();
   TextEditingController email = TextEditingController();
-  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController displayName = TextEditingController();

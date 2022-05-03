@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
+
+import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 
 void main() => runApp(MaterialApp(
-  home:ProfileApp(),
-));
+      home: ProfileApp(),
+    ));
 
 class ProfileApp extends StatelessWidget {
   @override
@@ -16,9 +17,7 @@ class ProfileApp extends StatelessWidget {
                   gradient: LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
-                      colors: [Colors.pinkAccent, Colors.lightGreenAccent]
-                  )
-              ),
+                      colors: [Colors.pinkAccent, Colors.lightGreenAccent])),
               child: Container(
                 width: double.infinity,
                 height: 350.0,
@@ -28,7 +27,8 @@ class ProfileApp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
+                        // backgroundImage:
+                        //     NetworkImage('assets/images/beesechurger.jpg'),
                         radius: 50.0,
                       ),
                       SizedBox(
@@ -45,17 +45,18 @@ class ProfileApp extends StatelessWidget {
                         height: 10.0,
                       ),
                       Card(
-                        margin: EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 5.0),
                         clipBehavior: Clip.antiAlias,
                         color: Colors.white,
                         elevation: 5.0,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 22.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 22.0),
                           child: Row(
                             children: <Widget>[
                               Expanded(
                                 child: Column(
-
                                   children: <Widget>[
                                     Text(
                                       "Communities",
@@ -80,7 +81,6 @@ class ProfileApp extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Column(
-
                                   children: <Widget>[
                                     Text(
                                       "Friends",
@@ -105,7 +105,6 @@ class ProfileApp extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Column(
-
                                   children: <Widget>[
                                     Text(
                                       "Messages",
@@ -135,11 +134,11 @@ class ProfileApp extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
-          ),
+              )),
           Container(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0,horizontal: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,14 +148,14 @@ class ProfileApp extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.purpleAccent[100],
                         fontStyle: FontStyle.normal,
-                        fontSize: 28.0
-                    ),
+                        fontSize: 28.0),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
-                  Text('filler filler filler.\n'
-                      'temp temp temp.',
+                  Text(
+                    'filler filler filler.\n'
+                    'temp temp temp.',
                     style: TextStyle(
                       fontSize: 22.0,
                       fontStyle: FontStyle.italic,
@@ -174,17 +173,13 @@ class ProfileApp extends StatelessWidget {
           ),
           Container(
             width: 300.00,
-
             child: RaisedButton(
-                onPressed: (){
-
+                onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => UserSettings())
-                  );
+                      MaterialPageRoute(builder: (context) => UserSettings()));
                 },
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)
-                ),
+                    borderRadius: BorderRadius.circular(80.0)),
                 elevation: 0.0,
                 padding: EdgeInsets.all(0.0),
                 child: Ink(
@@ -192,19 +187,22 @@ class ProfileApp extends StatelessWidget {
                     gradient: LinearGradient(
                         begin: Alignment.centerRight,
                         end: Alignment.centerLeft,
-                        colors: [Colors.lightGreenAccent,Colors.pinkAccent]
-                    ),
+                        colors: [Colors.lightGreenAccent, Colors.pinkAccent]),
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                    constraints:
+                        BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                     alignment: Alignment.center,
-                    child: Text("Settings",
-                      style: TextStyle(color: Colors.white, fontSize: 26.0, fontWeight:FontWeight.w300),
+                    child: Text(
+                      "Settings",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 26.0,
+                          fontWeight: FontWeight.w300),
                     ),
                   ),
-                )
-            ),
+                )),
           ),
         ],
       ),

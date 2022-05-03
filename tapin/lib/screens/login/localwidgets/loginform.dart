@@ -2,17 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tapin/screens/signup/signup.dart';
-import 'package:tapin/screens/userdash/userdash.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
-import 'package:tapin/services/graphQLConf.dart';
-import "package:tapin/services/queryMutation.dart";
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class OurLoginForm extends StatefulWidget {
@@ -22,9 +14,7 @@ class OurLoginForm extends StatefulWidget {
 
 class _OurLoginFormState extends State<OurLoginForm> {
   final _formKey = GlobalKey<FormState>();
-  QueryMutation addMutation = QueryMutation();
   TextEditingController email = TextEditingController();
-  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   bool isChecked = false;
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
