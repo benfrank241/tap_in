@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tapin/services/post.dart';
+import 'package:tapin/services/posts.dart';
 
 class Add extends StatefulWidget {
   Add({Key? key}) : super(key: key);

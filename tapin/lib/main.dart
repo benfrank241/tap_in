@@ -1,60 +1,48 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:tapin/constants.dart';
-import 'package:tapin/screens/createpost/new_post_view.dart';
-import 'package:tapin/screens/posts/add.dart';
-import 'package:tapin/screens/userchats/chatScreen.dart';
-import 'package:tapin/screens/signup/localwidgets/passwordResetScreen.dart';
-import 'package:tapin/screens/userfeed/feed.dart';
-import 'package:tapin/screens/userprofile/profile.dart';
-import 'package:tapin/utils/OurTheme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-//iimport 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
-
-import 'screens/login/login.dart';
-import 'screens/userdash/userdash.dart';
-import 'screens/userlists/organizations.dart';
-import 'screens/userlists/correspondences.dart';
-import 'screens/userorganization/userorganization.dart';
-import 'screens/userchats/chatScreen.dart';
-import 'screens/discover/discover.dart';
-
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:tapin/services/graphQLConf.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:tapin/screens/login/login.dart';
+import 'package:tapin/screens/signup/signup.dart';
+import 'package:tapin/screens/wrapper.dart';
+import 'package:tapin/services/auth.dart';
+import 'package:tapin/utils/ourTheme.dart';
 
-void main() async {
+import 'model/user_model.dart';
+//import '../signup/signup.dart';
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  //get typenameDataIdFromObject => null; //look into actual fix
-  // This widget is the root of your application.
+
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: OurTheme().buildTheme(),
-      //home:
-      // OurLogin(),
-      routes: {
-        //'/': (context) => Feed(),
-        //'/': (context) => NewPostView(),
-        '/': (context) => OurLogin(),
-        '/profileapp': (context) => ProfileApp(),
-        '/userfeed': (context) => Feed(),
-        '/add': (context) => Add(),
-        '/usersettings': (context) => UserSettings(),
-        '/userdash': (context) => UserDash(),
-        '/userorganizations': (context) => UserOrganizationList(),
-        '/usercorrespondences': (context) => UserCorrespondenceList(),
-        '/userorganization': (context) => UserOrganization(),
-        '/resetpasswordscreen': (context) => OurPasswordResetScreen(),
-        '/discover': (context) => Discover(),
-      },
+    return FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+
+          if(snapshot.hasError) {
+            //return SomethingWrong():
+          }
+          if (snapshot.connectionState == ConnectionState.done){
+            // return StreamProvider<UserModel>.value(
+            //     value: AuthService().user,
+            //     child: MaterialApp(
+            //     home: Wrapper()),
+            // );
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: OurTheme().buildTheme(),
+              home: OurLogin(),
+            );
+          }
+          return Text("Loading");
+        }
     );
   }
 }
+

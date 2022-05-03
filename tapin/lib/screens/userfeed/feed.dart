@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CircleAvatar(
                 backgroundColor: Colors.greenAccent[400],
                 radius: 100,
-                backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
+                //backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
                 child: Text(
                   // put username of curruser
                   '${LoggedInuser.username}',
@@ -103,6 +103,26 @@ class _MyHomePageState extends State<MyHomePage> {
               .push(MaterialPageRoute(builder: (context) => Add()));
           },
           child: Icon(Icons.add),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(child: Text('drawer geader'),
+              decoration: BoxDecoration(color: Colors.pink),
+            ),
+            ListTile(title: Text('Profile'),
+            onTap: () {
+              Navigator.pushNamed(context, '/profileapp');
+              }
+            ),
+            ListTile(
+              title: Text('Logout'),
+              // onTap: () async {
+              //   _authService.signOut();
+              // },
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
