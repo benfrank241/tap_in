@@ -19,12 +19,13 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: new ThemeData(
-        primarySwatch: Colors.pink,
+        appBarTheme: AppBarTheme(
+          color: const Color.fromARGB(255, 50, 50, 50),
+        ),
       ),
       home: new Center(
-        child: MyHomePage(title: 'tap-in'),
+        child: MyHomePage(title: ''),
       ),
     );
   }
@@ -71,24 +72,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        centerTitle: true,
+        toolbarHeight: 80,
+        title: Container(
+          width: 90,
+          child: Image.asset('assets/images/icon.png'),
+        ),
         actions: <Widget>[
-          TextButton(
+          IconButton(
+            iconSize: 40,
+            icon: Icon(
+              Icons.person,
+              color: Color.fromARGB(255, 255, 183, 255)),
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => ProfileApp()));
             },
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: Colors.greenAccent[400],
-                radius: 100,
-                child: Text(
-                  // put username of curruser
-                  '${LoggedInuser.username}',
-                  style: TextStyle(fontSize: 10, color: Colors.white),
-                ), //Text
-              ), //CircleAvatar
-            ),
           ),
         ],
       ),
@@ -96,7 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
         index: currentIndex,
         children: screens,
       ),
+      drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 50, 50, 50),
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => Add()));
