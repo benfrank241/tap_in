@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tapin/model/user_model.dart';
+import 'package:tapin/screens/DirectChat/DirectChatMain.dart';
 import 'package:tapin/screens/discover/discover.dart';
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     chatMain(),
+    //DirectChatMain(),
     Tinder(),
     Discover(),
   ];
@@ -96,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.pink,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         iconSize: 20,

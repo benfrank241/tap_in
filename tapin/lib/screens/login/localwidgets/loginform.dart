@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
@@ -18,6 +19,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
   bool isChecked = false;
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
+  TextEditingController displayName = TextEditingController();
 
   String? errorMessage;
 
@@ -174,6 +176,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             label: Text("Sign in with Google"),
             style: ElevatedButton.styleFrom(),
           )
+
           // TextButton(
           //     child: Text(
           //       'forgot password',
@@ -260,12 +263,76 @@ class _OurLoginFormState extends State<OurLoginForm> {
       idToken: _googleAuth.idToken,
     );
 
-    await FirebaseAuth.instance
-        .signInWithCredential(credential)
-        .then((value) => {
-              Fluttertoast.showToast(msg: "Login Successful"),
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => Feed())),
-            });
+    User? user =
+        (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+
+    if (user != null) {
+      UserModel userModel = UserModel();
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((value) => {
+                if (value.data() == null) {_displayNamePopUp(context)},
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Feed())),
+              });
+    }
+  }
+
+  postDetailsToFirestore() async {
+    //calling firestore
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    //caling usermodel
+
+    UserModel usermodel = UserModel();
+
+    //sending values
+
+    usermodel.email = user!.email;
+    usermodel.uid = user.uid;
+    usermodel.username = displayName.text.trim();
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(usermodel.tomap());
+
+    Fluttertoast.showToast(msg: "Login Successful");
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Feed()));
+  }
+
+  Future<void> _displayNamePopUp(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('First Time User:'),
+          content: TextField(
+            controller: displayName,
+            decoration: InputDecoration(hintText: "Enter a displayName"),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                postDetailsToFirestore();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
