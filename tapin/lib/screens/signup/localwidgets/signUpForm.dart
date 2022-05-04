@@ -148,15 +148,15 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
             ),
           ),
           SizedBox(
-            height: 100.0,
+            height: 50.0,
           ),
           ElevatedButton(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12.5),
+                padding: EdgeInsets.symmetric(horizontal: 90, vertical: 12.5),
                 child: Text(
                   "signup",
                   style: TextStyle(
-                      color: Color.fromARGB(255, 255, 251, 245), fontSize: 18),
+                      color: Theme.of(context).unselectedWidgetColor, fontSize: 18),
                 ),
               ),
               onPressed: isEnabled
@@ -165,9 +165,10 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                     }
                   : null,
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 133, 201, 169),
+                primary: Theme.of(context).primaryColorDark,
                 shape: StadiumBorder(),
-              )),
+              ),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
           )

@@ -38,7 +38,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
           ),
           TextFormField(
             controller: username,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 20.0, color: Colors.white),
             validator: (value) {
               if (value!.isEmpty) {
                 return ("Please Enter Your Email/Username");
@@ -56,16 +56,16 @@ class _OurLoginFormState extends State<OurLoginForm> {
             cursorColor: Colors.grey,
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.email_outlined,
-                  color: Theme.of(context).primaryColor),
+                  color: Colors.white),
               hintText: "email",
               hintStyle: TextStyle(
-                  fontSize: 18.0, color: Theme.of(context).primaryColor),
+                  fontSize: 20.0, color: Colors.white),
             ),
           ),
           TextFormField(
             controller: password,
             obscureText: true,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 20.0, color: Colors.white),
             cursorColor: Colors.grey,
             validator: (value) {
               RegExp regex = new RegExp(r'^.{6,}$');
@@ -81,10 +81,10 @@ class _OurLoginFormState extends State<OurLoginForm> {
             },
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.lock_outline,
-                  color: Theme.of(context).primaryColor),
+                  color: Colors.white),
               hintText: "password",
               hintStyle: TextStyle(
-                  fontSize: 18.0, color: Theme.of(context).primaryColor),
+                  fontSize: 20.0, color: Colors.white),
             ),
           ),
           /*RadioListTile(
@@ -98,7 +98,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             controlAffinity: ListTileControlAffinity.platform,
           ),*/
           Container(
-            padding: EdgeInsets.symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 1),
             child: Row(
               children: [
                 Container(
@@ -124,7 +124,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             ),
           ),
           SizedBox(
-            height: 5.0,
+            height: 50.0,
           ),
           ElevatedButton(
             child: Padding(
@@ -139,7 +139,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
               SignIn(username.text.trim(), password.text.trim());
             },
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              primary: Theme.of(context).primaryColorDark,
               shape: StadiumBorder(),
             ),
           ),
@@ -163,9 +163,12 @@ class _OurLoginFormState extends State<OurLoginForm> {
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              primary: Theme.of(context).primaryColorDark,
               shape: StadiumBorder(),
             ),
+          ),
+          SizedBox(
+            height: 20.0,
           ),
           ElevatedButton.icon(
             onPressed: () {
