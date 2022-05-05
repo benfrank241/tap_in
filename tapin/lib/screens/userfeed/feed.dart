@@ -20,6 +20,7 @@ class Feed extends StatelessWidget {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
+        scaffoldBackgroundColor: Color.fromARGB(255, 50, 50, 50),
         appBarTheme: AppBarTheme(
           color: const Color.fromARGB(255, 50, 50, 50),
         ),
@@ -81,9 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             iconSize: 40,
-            icon: Icon(
-              Icons.person,
-              color: Color.fromARGB(255, 255, 183, 255)),
+            icon: Icon(Icons.person, color: Colors.white),
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => ProfileApp()));
@@ -107,10 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        backgroundColor: Colors.pink,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        iconSize: 20,
+        backgroundColor: Color.fromARGB(255, 50, 50, 50),
+        selectedItemColor: Color.fromARGB(255, 255, 183, 255),
+        unselectedItemColor: Colors.white,
+        iconSize: 28,
         selectedFontSize: 15,
         unselectedFontSize: 10,
         showSelectedLabels: false,
@@ -118,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (index) => setState(() => currentIndex = index),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
+            icon: Icon(Icons.search),
             label: 'Chat',
           ),
           BottomNavigationBarItem(
@@ -126,7 +125,11 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
+            icon: Icon(Icons.local_fire_department_outlined),
+            label: 'Discover',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
             label: 'Discover',
           ),
         ],
