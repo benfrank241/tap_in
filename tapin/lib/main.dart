@@ -11,12 +11,13 @@ import 'screens/discover/discover.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
+  //get typenameDataIdFromObject => null; //look into actual fix
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
