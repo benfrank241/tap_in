@@ -16,14 +16,14 @@ class OurLogin extends StatelessWidget {
               padding: EdgeInsets.all(25.0),
               children: <Widget>[
                 SizedBox(
-                  height: 90.0,
+                  height: 60.0,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(40.0),
+                  padding: EdgeInsets.all(10.0),
                   child: Image.asset("assets/images/logo3.png"),
                 ),
                 SizedBox(
-                  height: 1.0,
+                  height: 50.0,
                 ),
                 OurLoginForm(),
               ],

@@ -1,18 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tapin/helper/helperfunctions.dart';
+import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/signup/signup.dart';
-import 'package:tapin/screens/userdash/userdash.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
-import 'package:tapin/services/graphQLConf.dart';
-import "package:tapin/services/queryMutation.dart";
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class OurLoginForm extends StatefulWidget {
@@ -22,12 +16,11 @@ class OurLoginForm extends StatefulWidget {
 
 class _OurLoginFormState extends State<OurLoginForm> {
   final _formKey = GlobalKey<FormState>();
-  QueryMutation addMutation = QueryMutation();
   TextEditingController email = TextEditingController();
-  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   bool isChecked = false;
   TextEditingController password = TextEditingController();
   TextEditingController username = TextEditingController();
+  TextEditingController displayName = TextEditingController();
 
   String? errorMessage;
 
@@ -46,7 +39,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
           ),
           TextFormField(
             controller: username,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 20.0, color: Colors.white),
             validator: (value) {
               if (value!.isEmpty) {
                 return ("Please Enter Your Email/Username");
@@ -63,17 +56,15 @@ class _OurLoginFormState extends State<OurLoginForm> {
             },
             cursorColor: Colors.grey,
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.email_outlined,
-                  color: Theme.of(context).primaryColor),
+              prefixIcon: Icon(Icons.email_outlined, color: Colors.white),
               hintText: "email",
-              hintStyle: TextStyle(
-                  fontSize: 18.0, color: Theme.of(context).primaryColor),
+              hintStyle: TextStyle(fontSize: 20.0, color: Colors.white),
             ),
           ),
           TextFormField(
             controller: password,
             obscureText: true,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 20.0, color: Colors.white),
             cursorColor: Colors.grey,
             validator: (value) {
               RegExp regex = new RegExp(r'^.{6,}$');
@@ -88,11 +79,9 @@ class _OurLoginFormState extends State<OurLoginForm> {
               password.text = value!;
             },
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock_outline,
-                  color: Theme.of(context).primaryColor),
+              prefixIcon: Icon(Icons.lock_outline, color: Colors.white),
               hintText: "password",
-              hintStyle: TextStyle(
-                  fontSize: 18.0, color: Theme.of(context).primaryColor),
+              hintStyle: TextStyle(fontSize: 20.0, color: Colors.white),
             ),
           ),
           /*RadioListTile(
@@ -106,7 +95,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             controlAffinity: ListTileControlAffinity.platform,
           ),*/
           Container(
-            padding: EdgeInsets.symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 1),
             child: Row(
               children: [
                 Container(
@@ -132,7 +121,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             ),
           ),
           SizedBox(
-            height: 5.0,
+            height: 50.0,
           ),
           ElevatedButton(
             child: Padding(
@@ -147,7 +136,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
               SignIn(username.text.trim(), password.text.trim());
             },
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              primary: Theme.of(context).primaryColorDark,
               shape: StadiumBorder(),
             ),
           ),
@@ -171,9 +160,12 @@ class _OurLoginFormState extends State<OurLoginForm> {
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              primary: Theme.of(context).primaryColorDark,
               shape: StadiumBorder(),
             ),
+          ),
+          SizedBox(
+            height: 20.0,
           ),
           ElevatedButton.icon(
             onPressed: () {
@@ -184,6 +176,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
             label: Text("Sign in with Google"),
             style: ElevatedButton.styleFrom(),
           )
+
           // TextButton(
           //     child: Text(
           //       'forgot password',
@@ -214,11 +207,22 @@ class _OurLoginFormState extends State<OurLoginForm> {
             Fluttertoast.showToast(msg: 'Invalid Username/Email!');
             return;
           }
+          displayName.text = email;
           email = snap.docs[0]['email'];
         }
+        HelperFunctions.saveUserEmailSharedPreference(email);
+        if (displayName.text == '') {
+          QuerySnapshot snap = await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: email)
+              .get();
+          displayName.text = snap.docs[0]['username'];
+        }
+        HelperFunctions.saveUserNameSharedPreference(displayName.text);
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
+                  HelperFunctions.saveUserLoggedInSharedPreference(true),
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Feed())),
@@ -270,12 +274,76 @@ class _OurLoginFormState extends State<OurLoginForm> {
       idToken: _googleAuth.idToken,
     );
 
-    await FirebaseAuth.instance
-        .signInWithCredential(credential)
-        .then((value) => {
-              Fluttertoast.showToast(msg: "Login Successful"),
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => Feed())),
-            });
+    User? user =
+        (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+
+    if (user != null) {
+      UserModel userModel = UserModel();
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((value) => {
+                if (value.data() == null) {_displayNamePopUp(context)},
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Feed())),
+              });
+    }
+  }
+
+  postDetailsToFirestore() async {
+    //calling firestore
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    //caling usermodel
+
+    UserModel usermodel = UserModel();
+
+    //sending values
+
+    usermodel.email = user!.email;
+    usermodel.uid = user.uid;
+    usermodel.username = displayName.text.trim();
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(usermodel.tomap());
+
+    Fluttertoast.showToast(msg: "Login Successful");
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Feed()));
+  }
+
+  Future<void> _displayNamePopUp(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('First Time User:'),
+          content: TextField(
+            controller: displayName,
+            decoration: InputDecoration(hintText: "Enter a displayName"),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                postDetailsToFirestore();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

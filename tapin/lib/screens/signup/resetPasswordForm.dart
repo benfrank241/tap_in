@@ -1,8 +1,4 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tapin/services/graphQLConf.dart';
-import "package:tapin/services/queryMutation.dart";
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -11,9 +7,7 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPassword> {
-  QueryMutation addMutation = QueryMutation();
   TextEditingController email = TextEditingController();
-  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
   @override
   void initState() {

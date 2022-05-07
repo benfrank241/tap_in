@@ -1,17 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tapin/Constants.dart';
+import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
+import 'package:tapin/screens/DirectChat/DirectChatRoom.dart';
 import 'package:tapin/screens/discover/discover.dart';
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
-import 'package:tapin/widgets/tabbedwindow/UserSettingsTabbed.dart';
-import 'package:tapin/widgets/NavBar.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
 import '../posts/add.dart';
 import '../userprofile/profile.dart';
+import '../posts/add.dart';
 
 void main() => runApp(new Feed());
 
@@ -20,12 +22,14 @@ class Feed extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: new ThemeData(
-        primarySwatch: Colors.pink,
+        scaffoldBackgroundColor: Color.fromARGB(255, 50, 50, 50),
+        appBarTheme: AppBarTheme(
+          color: const Color.fromARGB(255, 50, 50, 50),
+        ),
       ),
       home: new Center(
-        child: MyHomePage(title: 'tap-in'),
+        child: MyHomePage(title: ''),
       ),
     );
   }
@@ -55,14 +59,23 @@ class _MyHomePageState extends State<MyHomePage> {
         .get()
         .then((value) {
       this.LoggedInuser = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        //Constants.myName = LoggedInuser.username;
+        getUserInfo();
+      });
     });
+    //getUserInfo();
+  }
+
+  getUserInfo() async {
+    Constants.myName = (await HelperFunctions.getUserNameSharedPreference())!;
   }
 
   int currentIndex = 1;
 
   final screens = [
-    chatMain(),
+    //chatMain(),
+    chatRoom(),
     Tinder(),
     Discover(),
   ];
@@ -71,25 +84,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        centerTitle: true,
+        toolbarHeight: 80,
+        title: Container(
+          width: 90,
+          child: Image.asset('assets/images/icon.png'),
+        ),
         actions: <Widget>[
-          TextButton(
+          IconButton(
+            iconSize: 40,
+            icon: Icon(Icons.person, color: Colors.white),
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => ProfileApp()));
             },
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: Colors.greenAccent[400],
-                radius: 100,
-                //backgroundImage: NetworkImage('assets/images/beesechurger.jpg'),
-                child: Text(
-                  // put username of curruser
-                  '${LoggedInuser.username}',
-                  style: TextStyle(fontSize: 10, color: Colors.white),
-                ), //Text
-              ), //CircleAvatar
-            ),
           ),
         ],
       ),
@@ -97,40 +105,23 @@ class _MyHomePageState extends State<MyHomePage> {
         index: currentIndex,
         children: screens,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Add()));
-          },
-          child: Icon(Icons.add),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(child: Text('drawer geader'),
-              decoration: BoxDecoration(color: Colors.pink),
-            ),
-            ListTile(title: Text('Profile'),
-            onTap: () {
-              Navigator.pushNamed(context, '/profileapp');
-              }
-            ),
-            ListTile(
-              title: Text('Logout'),
-              // onTap: () async {
-              //   _authService.signOut();
-              // },
-            )
-          ],
-        ),
-      ),
+      drawer: Drawer(),
+      // floatingActionButton: FloatingActionButton(
+      //   heroTag: null,
+      //   backgroundColor: Color.fromARGB(255, 37, 26, 26),
+      //   onPressed: () {
+      //     Navigator.of(context)
+      //         .push(MaterialPageRoute(builder: (context) => Add()));
+      //   },
+      //   child: Icon(Icons.add),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        iconSize: 20,
+        backgroundColor: Color.fromARGB(255, 50, 50, 50),
+        selectedItemColor: Color.fromARGB(255, 255, 183, 255),
+        unselectedItemColor: Colors.white,
+        iconSize: 28,
         selectedFontSize: 15,
         unselectedFontSize: 10,
         showSelectedLabels: false,
@@ -138,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (index) => setState(() => currentIndex = index),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
+            icon: Icon(Icons.search),
             label: 'Chat',
           ),
           BottomNavigationBarItem(
@@ -146,7 +137,11 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
+            icon: Icon(Icons.local_fire_department_outlined),
+            label: 'Discover',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
             label: 'Discover',
           ),
         ],

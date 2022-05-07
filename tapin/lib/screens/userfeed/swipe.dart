@@ -64,7 +64,7 @@ class Card extends StatelessWidget {
         child: image, height: 1000,
           decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-            color: Color.fromARGB(255, 190, 190, 190),
+            color: Color.fromARGB(255, 50, 50, 50),
         ),
       ),
 
