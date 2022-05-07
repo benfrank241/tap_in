@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
@@ -55,11 +56,9 @@ class _OurLoginFormState extends State<OurLoginForm> {
             },
             cursorColor: Colors.grey,
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.email_outlined,
-                  color: Colors.white),
+              prefixIcon: Icon(Icons.email_outlined, color: Colors.white),
               hintText: "email",
-              hintStyle: TextStyle(
-                  fontSize: 20.0, color: Colors.white),
+              hintStyle: TextStyle(fontSize: 20.0, color: Colors.white),
             ),
           ),
           TextFormField(
@@ -80,11 +79,9 @@ class _OurLoginFormState extends State<OurLoginForm> {
               password.text = value!;
             },
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock_outline,
-                  color: Colors.white),
+              prefixIcon: Icon(Icons.lock_outline, color: Colors.white),
               hintText: "password",
-              hintStyle: TextStyle(
-                  fontSize: 20.0, color: Colors.white),
+              hintStyle: TextStyle(fontSize: 20.0, color: Colors.white),
             ),
           ),
           /*RadioListTile(
@@ -210,11 +207,22 @@ class _OurLoginFormState extends State<OurLoginForm> {
             Fluttertoast.showToast(msg: 'Invalid Username/Email!');
             return;
           }
+          displayName.text = email;
           email = snap.docs[0]['email'];
         }
+        HelperFunctions.saveUserEmailSharedPreference(email);
+        if (displayName.text == '') {
+          QuerySnapshot snap = await FirebaseFirestore.instance
+              .collection('users')
+              .where('email', isEqualTo: email)
+              .get();
+          displayName.text = snap.docs[0]['username'];
+        }
+        HelperFunctions.saveUserNameSharedPreference(displayName.text);
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
+                  HelperFunctions.saveUserLoggedInSharedPreference(true),
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Feed())),

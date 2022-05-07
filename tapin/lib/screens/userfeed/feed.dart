@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tapin/Constants.dart';
+import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
-import 'package:tapin/screens/DirectChat/DirectChatMain.dart';
+import 'package:tapin/screens/DirectChat/DirectChatRoom.dart';
 import 'package:tapin/screens/discover/discover.dart';
 import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
@@ -56,15 +58,23 @@ class _MyHomePageState extends State<MyHomePage> {
         .get()
         .then((value) {
       this.LoggedInuser = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        //Constants.myName = LoggedInuser.username;
+        getUserInfo();
+      });
     });
+    //getUserInfo();
+  }
+
+  getUserInfo() async {
+    Constants.myName = (await HelperFunctions.getUserNameSharedPreference())!;
   }
 
   int currentIndex = 1;
 
   final screens = [
-    chatMain(),
-    //DirectChatMain(),
+    //chatMain(),
+    chatRoom(),
     Tinder(),
     Discover(),
   ];
@@ -95,14 +105,15 @@ class _MyHomePageState extends State<MyHomePage> {
         children: screens,
       ),
       drawer: Drawer(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 50, 50, 50),
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Add()));
-        },
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   heroTag: null,
+      //   backgroundColor: Color.fromARGB(255, 37, 26, 26),
+      //   onPressed: () {
+      //     Navigator.of(context)
+      //         .push(MaterialPageRoute(builder: (context) => Add()));
+      //   },
+      //   child: Icon(Icons.add),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,

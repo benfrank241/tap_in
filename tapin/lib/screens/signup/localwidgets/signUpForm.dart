@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/login/login.dart';
 import 'package:flutter/material.dart';
+import 'package:tapin/screens/userfeed/feed.dart';
 
 class OurSignUpForm extends StatefulWidget {
   @override
@@ -151,23 +153,24 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
             height: 50.0,
           ),
           ElevatedButton(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 90, vertical: 12.5),
-                child: Text(
-                  "signup",
-                  style: TextStyle(
-                      color: Theme.of(context).unselectedWidgetColor, fontSize: 18),
-                ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 90, vertical: 12.5),
+              child: Text(
+                "signup",
+                style: TextStyle(
+                    color: Theme.of(context).unselectedWidgetColor,
+                    fontSize: 18),
               ),
-              onPressed: isEnabled
-                  ? () async {
-                      _signup();
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColorDark,
-                shape: StadiumBorder(),
-              ),
+            ),
+            onPressed: isEnabled
+                ? () async {
+                    _signup();
+                  }
+                : null,
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).primaryColorDark,
+              shape: StadiumBorder(),
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
@@ -215,6 +218,11 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
           .showSnackBar(SnackBar(content: Text('Please enter a valid email')));
     } else if (password.text == confirmPassword.text) {
       try {
+        //sharedPreferences
+        HelperFunctions.saveUserLoggedInSharedPreference(true);
+        HelperFunctions.saveUserEmailSharedPreference(email.text.trim());
+        HelperFunctions.saveUserNameSharedPreference(displayName.text.trim());
+
         await _auth
             .createUserWithEmailAndPassword(
               email: email.text.trim(),
@@ -279,6 +287,6 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
     Fluttertoast.showToast(msg: 'Account Created Successfully!');
 
     Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => OurLogin()), (route) => false);
+        MaterialPageRoute(builder: (context) => Feed()), (route) => false);
   }
 }
