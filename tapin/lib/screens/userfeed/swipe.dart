@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swipable/flutter_swipable.dart';
 
+import '../posts/add.dart';
+
 // Link to DB
 final List data = [
   {
@@ -36,7 +38,8 @@ class _TinderState extends State<Tinder> {
   @override
   Widget build(BuildContext context) {
     // Stack of cards that can be swiped. Set width, height, etc here.
-    return Center(
+    return Scaffold(
+      body: Center(
        child: Container(
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.9,
@@ -46,6 +49,15 @@ class _TinderState extends State<Tinder> {
               children: cards,
           ),
        ),
+    ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 255, 183, 255),
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Add()));
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
@@ -67,7 +79,6 @@ class Card extends StatelessWidget {
             color: Color.fromARGB(255, 50, 50, 50),
         ),
       ),
-
       // onSwipeRight, left, up, down, cancel, etc...
     );
   }
