@@ -284,10 +284,21 @@ class _OurLoginFormState extends State<OurLoginForm> {
           .doc(user.uid)
           .get()
           .then((value) => {
-                if (value.data() == null) {_displayNamePopUp(context)},
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Feed())),
+                if (value.exists)
+                  {
+                    displayName.text = value.data()!['username'],
+                    print(displayName.text),
+                    HelperFunctions.saveUserNameSharedPreference(
+                        displayName.text),
+                    Fluttertoast.showToast(msg: "Login Successful"),
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => Feed())),
+                  }
+                else
+                  {
+                    print('wassup bro'),
+                    {_displayNamePopUp(context)},
+                  }
               });
     }
   }
@@ -313,6 +324,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
         .doc(user.uid)
         .set(usermodel.tomap());
 
+    HelperFunctions.saveUserNameSharedPreference(displayName.text);
     Fluttertoast.showToast(msg: "Login Successful");
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => Feed()));

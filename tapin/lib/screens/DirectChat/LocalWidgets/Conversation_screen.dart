@@ -62,6 +62,7 @@ class _ConversationState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Stack(
         children: [
           ChatMessageList(),
