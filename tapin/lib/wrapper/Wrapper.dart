@@ -53,4 +53,13 @@ class Wrapper {
         .where('users', arrayContains: userName)
         .snapshots();
   }
+
+  getPostByContent(String Content) {
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .where('text', isEqualTo: Content)
+        // .where('text', isGreaterThanOrEqualTo: Content)
+        // .where('text', isLessThan: Content +'z')
+        .get();
+  }
 }

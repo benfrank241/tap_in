@@ -12,4 +12,23 @@ class PostModel {
     required this.text,
     required this.timestamp,
   });
+
+  factory PostModel.fromMap(Map) {
+    return PostModel(
+      id: Map['id'],
+      creator: Map['creator'],
+      text: Map['text'],
+      timestamp: Map['timestamp']
+    );
+  }
+
+  Map<String, dynamic> tomap() {
+    return {
+      'id': id,
+      'creator': creator,
+      'text': text,
+      'timestamp': timestamp,
+    };
+  }
+
 }

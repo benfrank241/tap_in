@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
+import '../../model/post.dart';
 import '../../model/user_model.dart';
 import '../../wrapper/Wrapper.dart';
 
@@ -17,6 +18,7 @@ class DiscoverState extends State<Discover> {
 
   QuerySnapshot? searchSnapshot;
   UserModel? searchedUser;
+  PostModel? searchedPost;
 
   initiateSearch() {
     // print(Constants.myName);
@@ -24,6 +26,16 @@ class DiscoverState extends State<Discover> {
       setState(() {
         searchSnapshot = val;
         searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
+      });
+    });
+  }
+
+  initiateSearchPost() {
+    // print(Constants.myName);
+    wrapper.getPostByContent(searchTextEdittingController.text).then((val) {
+      setState(() {
+        searchSnapshot = val;
+        searchedPost = PostModel.fromMap(searchSnapshot?.docs[0].data());
       });
     });
   }
@@ -44,6 +56,53 @@ class DiscoverState extends State<Discover> {
         : Container();
   }
 
+  Widget searchListPost() {
+    return searchedPost != null
+        ? ListView.builder(
+      itemCount: searchSnapshot?.docs.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        print(searchedPost?.id);
+        return searchTilePost(
+          userName: searchedPost?.id ?? '',
+          text: searchedPost?.text ?? '',
+        );
+      },
+    )
+        : Container();
+  }
+
+  Widget searchTilePost({required String userName, required String text}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(userName),
+              Text(text),
+            ],
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              //viewProfile();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.pink,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Text('View Profile'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget searchTile({required String userName, required String userEmail}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -59,15 +118,15 @@ class DiscoverState extends State<Discover> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              //createChatroomAndStartConversation(userName);
+              //viewProfile();
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.pink,
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Text('Message'),
+              child: Text('View Profile'),
             ),
           ),
         ],
@@ -122,7 +181,7 @@ class DiscoverState extends State<Discover> {
                       )),
                   GestureDetector(
                     onTap: () {
-                      initiateSearch();
+                      initiateSearchPost();
                     },
                     child: Container(
                         height: 40,
@@ -146,7 +205,7 @@ class DiscoverState extends State<Discover> {
                 ],
               ),
             ),
-            searchList(),
+            searchListPost(),
           ]),
         ));
   }
