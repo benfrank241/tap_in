@@ -204,6 +204,19 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
                           contentType: http_parser.MediaType('image', 'jpg')
                       ); */
     //parseFile2 = ParseFile(File("path"));
+
+    //check if duplicate username
+
+    bool dupliflag = false;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: displayName.text)
+        .get()
+        .then((value) => {
+              if (value.docs.isNotEmpty) dupliflag = true,
+            });
+
     bool emailvalid = RegExp(
             r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
         .hasMatch(email.text);
@@ -216,6 +229,9 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
     } else if (!emailvalid) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Please enter a valid email')));
+    } else if (dupliflag) {
+      displayName.text = '';
+      Fluttertoast.showToast(msg: 'Display Name has already been taken');
     } else if (password.text == confirmPassword.text) {
       try {
         //sharedPreferences

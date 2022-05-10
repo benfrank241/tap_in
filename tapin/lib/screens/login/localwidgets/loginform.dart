@@ -349,8 +349,23 @@ class _OurLoginFormState extends State<OurLoginForm> {
             ),
             FlatButton(
               child: Text('OK'),
-              onPressed: () {
-                postDetailsToFirestore();
+              onPressed: () async {
+                await FirebaseFirestore.instance
+                    .collection('users')
+                    .where('username', isEqualTo: displayName.text)
+                    .get()
+                    .then((value) => {
+                          if (value.docs.isEmpty)
+                            {
+                              postDetailsToFirestore(),
+                            }
+                          else
+                            {
+                              Fluttertoast.showToast(
+                                  msg: 'Username is already taken.'),
+                              displayName.text = '',
+                            }
+                        });
               },
             ),
           ],
