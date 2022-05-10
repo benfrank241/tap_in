@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (index) => setState(() => currentIndex = index),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.chat),
             label: 'Chat',
           ),
           BottomNavigationBarItem(
@@ -136,12 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_fire_department_outlined),
-            label: 'Discover',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Discover',
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
         ],
       ),
