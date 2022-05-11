@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tapin/screens/DirectChat/DirectChatRoom.dart';
+import 'package:tapin/screens/mainrouter/mainrouter.dart';
 import 'package:tapin/screens/signup/localwidgets/passwordResetScreen.dart';
-import 'package:tapin/screens/userfeed/feed.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/utils/OurTheme.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => OurLogin(),
         //'/': (context) => chatRoom(),
         '/profileapp': (context) => ProfileApp(),
-        '/userfeed': (context) => Feed(),
+        '/mainrouter': (context) => mainRouter(),
         '/resetpasswordscreen': (context) => OurPasswordResetScreen(),
         '/discover': (context) => Discover(),
       },

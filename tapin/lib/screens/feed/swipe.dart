@@ -40,17 +40,18 @@ class _TinderState extends State<Tinder> {
     // Stack of cards that can be swiped. Set width, height, etc here.
     return Scaffold(
       body: Center(
-       child: Container(
+        child: Container(
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.75,
           // Important to keep as a stack to have overlay of cards.
           child: Stack(
-              children: cards,
+            children: cards,
           ),
-       ),
-    ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         backgroundColor: Color.fromARGB(255, 255, 183, 255),
         onPressed: () {
           Navigator.of(context)
@@ -73,10 +74,11 @@ class Card extends StatelessWidget {
     return Swipable(
       // Set the swipable widget
       child: Container(
-        child: image, height: 1000,
-          decoration: BoxDecoration(
+        child: image,
+        height: 1000,
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-            color: Color.fromARGB(255, 50, 50, 50),
+          color: Color.fromARGB(255, 50, 50, 50),
         ),
       ),
       // onSwipeRight, left, up, down, cancel, etc...

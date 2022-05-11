@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
+import 'package:tapin/screens/mainrouter/mainrouter.dart';
 import 'package:tapin/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:tapin/screens/userfeed/feed.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -225,7 +225,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
                   HelperFunctions.saveUserLoggedInSharedPreference(true),
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Feed())),
+                      MaterialPageRoute(builder: (context) => mainRouter())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -292,7 +292,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
                         displayName.text),
                     Fluttertoast.showToast(msg: "Login Successful"),
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => Feed())),
+                        MaterialPageRoute(builder: (context) => mainRouter())),
                   }
                 else
                   {
@@ -327,7 +327,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
     HelperFunctions.saveUserNameSharedPreference(displayName.text);
     Fluttertoast.showToast(msg: "Login Successful");
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => Feed()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => mainRouter()));
   }
 
   Future<void> _displayNamePopUp(BuildContext context) async {

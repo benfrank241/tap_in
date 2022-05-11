@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tapin/screens/mainrouter/mainrouter.dart';
 
-import '../userfeed/feed.dart';
 import '../userprofile/profile.dart';
 import 'chatPage.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,21 +12,18 @@ class HomePage extends StatefulWidget {
 int _selectedIndex = 0;
 
 class _HomePageState extends State<HomePage> {
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
 
       if (index == 1) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Feed())
-        );
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => mainRouter()));
       }
 
       if (index == 2) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ProfileApp())
-        );
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ProfileApp()));
       }
     });
   }
@@ -40,11 +36,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         elevation: 0,
         selectedFontSize: 20,
-        unselectedIconTheme: IconThemeData(
-            color: Colors.purpleAccent[100], size: 30),
+        unselectedIconTheme:
+            IconThemeData(color: Colors.purpleAccent[100], size: 30),
         unselectedItemColor: Colors.purpleAccent[100],
-        selectedIconTheme: IconThemeData(
-            color: Colors.purpleAccent[100], size: 40),
+        selectedIconTheme:
+            IconThemeData(color: Colors.purpleAccent[100], size: 40),
         selectedItemColor: Colors.purpleAccent[100],
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         items: const <BottomNavigationBarItem>[
@@ -59,7 +55,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-
           ),
         ],
         currentIndex: _selectedIndex,

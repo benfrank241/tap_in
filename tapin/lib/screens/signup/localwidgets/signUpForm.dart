@@ -5,7 +5,7 @@ import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/login/login.dart';
 import 'package:flutter/material.dart';
-import 'package:tapin/screens/userfeed/feed.dart';
+import 'package:tapin/screens/mainrouter/mainrouter.dart';
 
 class OurSignUpForm extends StatefulWidget {
   @override
@@ -302,7 +302,9 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
         .set(usermodel.tomap());
     Fluttertoast.showToast(msg: 'Account Created Successfully!');
 
-    Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => Feed()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => mainRouter()),
+        (route) => false);
   }
 }

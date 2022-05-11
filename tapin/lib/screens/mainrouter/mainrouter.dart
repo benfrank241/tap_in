@@ -6,18 +6,19 @@ import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
 import 'package:tapin/screens/DirectChat/DirectChatRoom.dart';
 import 'package:tapin/screens/discover/discover.dart';
-import 'package:tapin/screens/userfeed/swipe.dart';
 import 'package:flutter/material.dart';
+import 'package:tapin/screens/feed/MainFeed.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
+import '../feed/swipe.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
 import '../posts/add.dart';
 import '../userprofile/profile.dart';
 import '../posts/add.dart';
 
-void main() => runApp(new Feed());
+void main() => runApp(new mainRouter());
 
-class Feed extends StatelessWidget {
+class mainRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -76,7 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final screens = [
     //chatMain(),
     chatRoom(),
-    Tinder(),
+    MainFeed(),
+    //Tinder(),
     Discover(),
   ];
 

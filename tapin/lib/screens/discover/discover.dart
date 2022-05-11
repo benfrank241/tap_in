@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:tapin/screens/userfeed/feed.dart';
-import '../../Constants.dart';
+import 'package:tapin/screens/mainrouter/mainrouter.dart';
 import '../../model/post.dart';
 import '../../model/user_model.dart';
 import '../../wrapper/Wrapper.dart';
@@ -14,7 +13,7 @@ class Discover extends StatefulWidget {
 
 class DiscoverState extends State<Discover> {
   TextEditingController searchTextEdittingController =
-  new TextEditingController();
+      new TextEditingController();
   Wrapper wrapper = Wrapper();
 
   QuerySnapshot? searchSnapshot;
@@ -36,16 +35,16 @@ class DiscoverState extends State<Discover> {
   Widget searchList() {
     return searchedUser != null
         ? ListView.builder(
-      itemCount: searchSnapshot?.docs.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        //print(searchedUser?.username);
-        return searchTile(
-          userName: searchedUser?.username ?? '',
-          userEmail: searchedUser?.email ?? '',
-        );
-      },
-    )
+            itemCount: searchSnapshot?.docs.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              //print(searchedUser?.username);
+              return searchTile(
+                userName: searchedUser?.username ?? '',
+                userEmail: searchedUser?.email ?? '',
+              );
+            },
+          )
         : Container();
   }
 
@@ -64,19 +63,23 @@ class DiscoverState extends State<Discover> {
   Widget searchListPost() {
     return searchedPost != null
         ? ListView.builder(
-      itemCount: searchSnapshot?.docs.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return searchTilePost(
-          creator: searchedUser?.username ?? '',
-          text: searchedPost?.text ?? '',
-        );
-      },
-    )
+            itemCount: searchSnapshot?.docs.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return searchTilePost(
+                creator: searchedUser?.username ?? '',
+                text: searchedPost?.text ?? '',
+                createdAt: searchedPost?.timestamp.toString() ?? '',
+              );
+            },
+          )
         : Container();
   }
 
-  Widget searchTilePost({required String creator, required String text}) {
+  Widget searchTilePost(
+      {required String creator,
+      required String text,
+      required String createdAt}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -86,6 +89,7 @@ class DiscoverState extends State<Discover> {
             children: [
               Text(creator),
               Text(text),
+              Text(createdAt),
             ],
           ),
           Spacer(),
@@ -153,17 +157,13 @@ class DiscoverState extends State<Discover> {
 
         if (index == 1) {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Feed()));
+              .push(MaterialPageRoute(builder: (context) => mainRouter()));
         }
       });
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-          "Use @ to search for profiles"
-          )
-        ),
+        appBar: AppBar(title: Text("Use @ to search for profiles")),
         body: Container(
           child: Column(children: [
             Container(
@@ -173,16 +173,16 @@ class DiscoverState extends State<Discover> {
                 children: [
                   Expanded(
                       child: TextField(
-                        controller: searchTextEdittingController,
-                        decoration: InputDecoration(
-                          hintText: 'Search Tap-in',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                        ),
-                      )),
+                    controller: searchTextEdittingController,
+                    decoration: InputDecoration(
+                      hintText: 'Search Tap-in',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                    ),
+                  )),
                   GestureDetector(
                     onTap: () {
                       initiateSearchPost();
@@ -213,4 +213,4 @@ class DiscoverState extends State<Discover> {
           ]),
         ));
   }
-  }
+}

@@ -58,8 +58,10 @@ class Wrapper {
     return FirebaseFirestore.instance
         .collection('posts')
         // .where('text', isEqualTo: Content)
+        //.orderBy('createdAt', descending: false)
         .where('text', isGreaterThanOrEqualTo: Content)
-        .where('text', isLessThan: Content +'z')
+        .where('text', isLessThan: Content + 'z')
+        //.snapshots();
         .get();
   }
 }
