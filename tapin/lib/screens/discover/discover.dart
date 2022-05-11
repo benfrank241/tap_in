@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:tapin/screens/userfeed/feed.dart';
+import '../../Constants.dart';
 import '../../model/post.dart';
 import '../../model/user_model.dart';
 import '../../wrapper/Wrapper.dart';
@@ -28,16 +29,8 @@ class DiscoverState extends State<Discover> {
         searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
       });
     });
-  }
-
-  initiateSearchPost() {
-    // print(Constants.myName);
-    wrapper.getPostByContent(searchTextEdittingController.text).then((val) {
-      setState(() {
-        searchSnapshot = val;
-        searchedPost = PostModel.fromMap(searchSnapshot?.docs[0].data());
-      });
-    });
+    print(searchedUser?.uid);
+    print(searchedUser?.email);
   }
 
   Widget searchList() {
@@ -56,15 +49,26 @@ class DiscoverState extends State<Discover> {
         : Container();
   }
 
+  initiateSearchPost() {
+    //print(Constants.myName);
+    wrapper.getPostByContent(searchTextEdittingController.text).then((val) {
+      setState(() {
+        searchSnapshot = val;
+        searchedPost = PostModel.fromMap(searchSnapshot?.docs[0].data());
+      });
+    });
+    print(searchedPost?.text);
+    print("test");
+  }
+
   Widget searchListPost() {
     return searchedPost != null
         ? ListView.builder(
       itemCount: searchSnapshot?.docs.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        print(searchedPost?.id);
         return searchTilePost(
-          userName: searchedPost?.id ?? '',
+          creator: searchedUser?.username ?? '',
           text: searchedPost?.text ?? '',
         );
       },
@@ -72,7 +76,7 @@ class DiscoverState extends State<Discover> {
         : Container();
   }
 
-  Widget searchTilePost({required String userName, required String text}) {
+  Widget searchTilePost({required String creator, required String text}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -80,7 +84,7 @@ class DiscoverState extends State<Discover> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(userName),
+              Text(creator),
               Text(text),
             ],
           ),
@@ -95,7 +99,7 @@ class DiscoverState extends State<Discover> {
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Text('View Profile'),
+              child: Text('Tap In'),
             ),
           ),
         ],

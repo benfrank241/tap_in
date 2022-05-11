@@ -8,7 +8,7 @@ class PostService {
   List<PostModel> _postListFromSnapshot(QuerySnapshot<Map<String,dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
       return PostModel(
-      id: doc.id,
+      //id: doc.id,
       text: doc.data()['text'] ?? '',
       creator: doc.data()['creator'] ?? '',
       timestamp: doc.data()['timestamp'] ?? 0,
