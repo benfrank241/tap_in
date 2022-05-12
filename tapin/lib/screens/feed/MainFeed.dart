@@ -13,58 +13,93 @@ class MainFeed extends StatefulWidget {
 }
 
 class _MainFeed extends State<MainFeed> {
-  Stream? chatRoomStream;
-
-  Widget chatRoomList() {
-    return StreamBuilder(
-      stream: chatRoomStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  //chatModel thismodel =
-                  //chatModel.fromMap(snapshot.data.docs[index].data());
-                  Map thismodel = snapshot.data.docs[index].data();
-                  return chatRoomTiles(
-                    userName: thismodel['chatRoomId']
-                        .toString()
-                        .replaceAll('_', '')
-                        .replaceAll(Constants.myName, ''),
-                    chatRoomId: thismodel['chatRoomId'],
-                  );
-                })
-            : Container(
-                // child: Text(
-                //   "I WAS EMPTY BRUH!",
-                //   style: TextStyle(color: Colors.white),
-                // ),
-                );
-      },
-    );
-  }
+  Stream? PostsStream;
 
   @override
   void initState() {
-    getUserInfo();
+    getposts();
     super.initState();
   }
 
-  getUserInfo() async {
-    Constants.myName = (await HelperFunctions.getUserNameSharedPreference())!;
-    // print('${Constants.myName} GETUSERINFO OUTPUT');
-    Wrapper().getChatRooms(Constants.myName).then((val) {
+  getposts() async {
+    Wrapper().getAllPosts().then((val) {
       setState(() {
-        chatRoomStream = val;
+        PostsStream = val;
       });
     });
+  }
+
+  Widget AllPostList() {
+    return Expanded(
+      child: StreamBuilder(
+        stream: PostsStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    Map thismodel = snapshot.data.docs[index].data();
+                    return searchTilePost(
+                      creator: thismodel['username'],
+                      text: thismodel['text'],
+                      createdAt: thismodel['timestamp'].toDate().toString(),
+                    );
+                  })
+              : Container();
+        },
+      ),
+    );
+  }
+
+  Widget searchTilePost(
+      {required String creator,
+      required String text,
+      required String createdAt}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(creator),
+              Text(text),
+              Text(createdAt),
+            ],
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              //viewProfile();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.pink,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Text('Tap In'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(),
-      body: chatRoomList(),
+      body: Container(
+        child: Container(
+          child: Column(
+            children: [
+              AllPostList(),
+            ],
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         heroTag: null,
         backgroundColor: Color.fromARGB(255, 159, 31, 159),
@@ -73,42 +108,6 @@ class _MainFeed extends State<MainFeed> {
               .push(MaterialPageRoute(builder: (context) => Add()));
         },
         child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class chatRoomTiles extends StatelessWidget {
-  final String? userName;
-  final String? chatRoomId;
-
-  chatRoomTiles({this.userName, this.chatRoomId});
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ConversationScreen(chatRoomId!)))
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Row(children: [
-          Container(
-              height: 40,
-              width: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Text('${userName?.substring(0, 1).toUpperCase()} ')),
-          SizedBox(
-            width: 8,
-          ),
-          Text(userName!, style: TextStyle(color: Colors.white)),
-        ]),
       ),
     );
   }

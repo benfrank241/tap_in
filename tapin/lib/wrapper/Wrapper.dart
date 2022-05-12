@@ -64,4 +64,8 @@ class Wrapper {
         .snapshots();
     //.get();
   }
+
+  getAllPosts() async {
+    return await FirebaseFirestore.instance.collection('posts').snapshots();
+  }
 }
