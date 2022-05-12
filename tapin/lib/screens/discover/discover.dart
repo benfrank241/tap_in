@@ -28,8 +28,6 @@ class DiscoverState extends State<Discover> {
         searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
       });
     });
-    print(searchedUser?.uid);
-    print(searchedUser?.email);
   }
 
   Widget searchList() {
@@ -56,8 +54,6 @@ class DiscoverState extends State<Discover> {
         searchedPost = PostModel.fromMap(searchSnapshot?.docs[0].data());
       });
     });
-    print(searchedPost?.text);
-    print("test");
   }
 
   Widget searchListPost() {
@@ -67,9 +63,9 @@ class DiscoverState extends State<Discover> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return searchTilePost(
-                creator: searchedUser?.username ?? '',
+                creator: searchedPost?.username ?? '',
                 text: searchedPost?.text ?? '',
-                createdAt: searchedPost?.timestamp.toString() ?? '',
+                createdAt: searchedPost?.timestamp?.toDate().toString() ?? '',
               );
             },
           )
@@ -142,6 +138,19 @@ class DiscoverState extends State<Discover> {
     );
   }
 
+  Widget clearTile() {
+    return ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(20.0),
+      children: const <Widget>[
+        Text("I'm dedicating every day to you"),
+        Text('Domestic life was never quite my style'),
+        Text('When you smile, you knock me out, I fall apart'),
+        Text('And I thought I was so smart'),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     int _selectedIndex = 2;
@@ -185,6 +194,7 @@ class DiscoverState extends State<Discover> {
                   )),
                   GestureDetector(
                     onTap: () {
+                      initiateSearch();
                       initiateSearchPost();
                     },
                     child: Container(
@@ -209,6 +219,7 @@ class DiscoverState extends State<Discover> {
                 ],
               ),
             ),
+            searchList(),
             searchListPost(),
           ]),
         ));

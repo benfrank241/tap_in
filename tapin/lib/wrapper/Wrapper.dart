@@ -61,7 +61,7 @@ class Wrapper {
         //.orderBy('createdAt', descending: false)
         .where('text', isGreaterThanOrEqualTo: Content)
         .where('text', isLessThan: Content + 'z')
-        //.snapshots();
-        .get();
+        .snapshots();
+        //.get();
   }
 }
