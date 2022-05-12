@@ -72,8 +72,7 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                       CircleAvatar(
                         backgroundImage:
-                            AssetImage('assets/images/beesechurger.jpg'),
-                        //change this to user pic (might have to be networkprovider)
+                            AssetImage('assets/images/default.jpg'),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8.0, vertical: 22.0),

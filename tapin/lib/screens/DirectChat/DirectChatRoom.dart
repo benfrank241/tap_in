@@ -67,7 +67,8 @@ class _chatRoomState extends State<chatRoom> {
       //appBar: AppBar(),
       body: chatRoomList(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
+        backgroundColor: Color.fromARGB(255, 37, 237, 160),
+        child: Icon(Icons.search, color: Colors.black),
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => searchScreen()));
@@ -99,7 +100,7 @@ class chatRoomTiles extends StatelessWidget {
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color.fromARGB(255, 37, 237, 160),
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Text('${userName?.substring(0, 1).toUpperCase()} ')),
