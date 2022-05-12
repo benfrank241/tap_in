@@ -32,6 +32,7 @@ class _searchScreenState extends State<searchScreen> {
   Widget searchList() {
     return searchedUser != null
         ? ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             itemCount: searchSnapshot?.docs.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {

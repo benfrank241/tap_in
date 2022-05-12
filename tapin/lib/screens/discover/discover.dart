@@ -14,25 +14,36 @@ class Discover extends StatefulWidget {
 class DiscoverState extends State<Discover> {
   TextEditingController searchTextEdittingController =
       new TextEditingController();
-  Wrapper wrapper = Wrapper();
 
   QuerySnapshot? searchSnapshot;
+
   UserModel? searchedUser;
-  PostModel? searchedPost;
+
+  Stream? searchSnapshotPost;
+
+//search User
 
   initiateSearch() {
-    // print(Constants.myName);
-    wrapper.getUserByUsername(searchTextEdittingController.text).then((val) {
-      setState(() {
-        searchSnapshot = val;
-        searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
+    if (searchTextEdittingController != '') {
+      String thisString = searchTextEdittingController.text.replaceAll('@', '');
+      Wrapper().getUserByUsername(thisString).then((val) {
+        setState(() {
+          searchSnapshot = val;
+          searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
+          searchSnapshotPost = null;
+        });
       });
-    });
+    } else {
+      searchSnapshotPost = null;
+      searchSnapshot = null;
+      searchedUser = null;
+    }
   }
 
   Widget searchList() {
     return searchedUser != null
         ? ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             itemCount: searchSnapshot?.docs.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
@@ -46,30 +57,84 @@ class DiscoverState extends State<Discover> {
         : Container();
   }
 
+  Widget searchTile({required String userName, required String userEmail}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(userName),
+              Text(userEmail),
+            ],
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              //viewProfile();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.pink,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Text('View Profile'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+//End Search User
+
+//Search Post
+
   initiateSearchPost() {
-    //print(Constants.myName);
-    wrapper.getPostByContent(searchTextEdittingController.text).then((val) {
-      setState(() {
-        searchSnapshot = val;
-        searchedPost = PostModel.fromMap(searchSnapshot?.docs[0].data());
+    if (searchTextEdittingController.text != '') {
+      Wrapper().getPostByContent(searchTextEdittingController.text).then((val) {
+        setState(() {
+          searchSnapshotPost = val;
+          searchSnapshot = null;
+          searchedUser = null;
+        });
       });
-    });
+    } else {
+      setState(() {
+        searchSnapshotPost = null;
+        searchSnapshot = null;
+        searchedUser = null;
+      });
+    }
   }
 
   Widget searchListPost() {
-    return searchedPost != null
-        ? ListView.builder(
-            itemCount: searchSnapshot?.docs.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return searchTilePost(
-                creator: searchedPost?.username ?? '',
-                text: searchedPost?.text ?? '',
-                createdAt: searchedPost?.timestamp?.toDate().toString() ?? '',
-              );
-            },
-          )
-        : Container();
+    if (searchSnapshotPost == null) {
+      return Container();
+    } else {
+      return Expanded(
+        child: StreamBuilder(
+          stream: searchSnapshotPost,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return snapshot.hasData
+                ? ListView.builder(
+                    itemCount: snapshot.data.docs.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      Map thismodel = snapshot.data.docs[index].data();
+                      return searchTilePost(
+                        creator: thismodel['username'],
+                        text: thismodel['text'],
+                        createdAt: thismodel['timestamp'].toDate().toString(),
+                      );
+                    })
+                : Container();
+          },
+        ),
+      );
+    }
   }
 
   Widget searchTilePost(
@@ -107,36 +172,7 @@ class DiscoverState extends State<Discover> {
     );
   }
 
-  Widget searchTile({required String userName, required String userEmail}) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(userName),
-              Text(userEmail),
-            ],
-          ),
-          Spacer(),
-          GestureDetector(
-            onTap: () {
-              //viewProfile();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.pink,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Text('View Profile'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+//EndSsearch Post
 
   Widget clearTile() {
     return ListView(
@@ -153,24 +189,6 @@ class DiscoverState extends State<Discover> {
 
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 2;
-
-    void _onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-
-        if (index == 0) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Discover()));
-        }
-
-        if (index == 1) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => mainRouter()));
-        }
-      });
-    }
-
     return Scaffold(
         appBar: AppBar(title: Text("Use @ to search for profiles")),
         body: Container(
@@ -194,8 +212,20 @@ class DiscoverState extends State<Discover> {
                   )),
                   GestureDetector(
                     onTap: () {
-                      initiateSearch();
-                      initiateSearchPost();
+                      if (searchTextEdittingController.text == '') {
+                        setState(() {
+                          print('shit should be empty');
+                          searchSnapshotPost = null;
+                          searchSnapshot = null;
+                          searchedUser = null;
+                        });
+                      } else if (searchTextEdittingController.text
+                              .substring(0, 1) ==
+                          '@') {
+                        initiateSearch();
+                      } else {
+                        initiateSearchPost();
+                      }
                     },
                     child: Container(
                         height: 40,
