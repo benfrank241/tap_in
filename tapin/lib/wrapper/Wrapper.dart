@@ -54,14 +54,14 @@ class Wrapper {
         .snapshots();
   }
 
-  getPostByContent(String Content) {
-    return FirebaseFirestore.instance
+  getPostByContent(String Content) async {
+    return await FirebaseFirestore.instance
         .collection('posts')
         // .where('text', isEqualTo: Content)
         //.orderBy('createdAt', descending: false)
         .where('text', isGreaterThanOrEqualTo: Content)
         .where('text', isLessThan: Content + 'z')
         .snapshots();
-        //.get();
+    //.get();
   }
 }

@@ -22,6 +22,7 @@ class _chatRoomState extends State<chatRoom> {
         return snapshot.hasData
             ? ListView.builder(
                 itemCount: snapshot.data.docs.length,
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   //chatModel thismodel =
                   //chatModel.fromMap(snapshot.data.docs[index].data());
