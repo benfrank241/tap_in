@@ -9,6 +9,7 @@ import 'package:tapin/screens/discover/discover.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/screens/feed/MainFeed.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
+import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 import '../feed/swipe.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
@@ -107,16 +108,34 @@ class _MyHomePageState extends State<MyHomePage> {
         index: currentIndex,
         children: screens,
       ),
-      drawer: Drawer(),
-      // floatingActionButton: FloatingActionButton(
-      //   heroTag: null,
-      //   backgroundColor: Color.fromARGB(255, 37, 26, 26),
-      //   onPressed: () {
-      //     Navigator.of(context)
-      //         .push(MaterialPageRoute(builder: (context) => Add()));
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => UserSettings()));
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
