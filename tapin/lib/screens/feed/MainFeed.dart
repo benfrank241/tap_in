@@ -60,22 +60,31 @@ class _MainFeed extends State<MainFeed> {
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
-          Column(
+          Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(creator),
-              Text(text),
-              Text(createdAt),
+              Text('@$creator - $createdAt',
+                style: const TextStyle(color: Color.fromARGB(255, 148, 144, 141)),),
+              Text(text,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    color: Colors.white,
+                fontSize: 17),
+              ),
             ],
           ),
-          Spacer(),
+          ),
+
+          //Spacer(),
           GestureDetector(
             onTap: () {
               //viewProfile();
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.pink,
+                color: Color.fromARGB(255, 37, 237, 160),
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -102,12 +111,13 @@ class _MainFeed extends State<MainFeed> {
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: null,
-        backgroundColor: Color.fromARGB(255, 159, 31, 159),
+        backgroundColor: Color.fromARGB(255, 255, 183, 255),
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => Add()));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,
+        color: Colors.black,),
       ),
     );
   }

@@ -109,32 +109,122 @@ class _MyHomePageState extends State<MyHomePage> {
         children: screens,
       ),
       drawer: Drawer(
+        backgroundColor: Color.fromARGB(255, 50, 50, 50),
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            const SizedBox(
+              height: 150,
+        child: DrawerHeader(
+              child: Text(''),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color.fromARGB(255, 50, 50, 50),
+                image: DecorationImage(
+                    image: AssetImage('assets/images/logo3.png'),
+                  fit: BoxFit.fitWidth,
               ),
-              child: Text('Drawer Header'),
+              ),
+            ),
+            ),
+            Divider(
+              height: 5,
+              thickness: 5,
+              color: Color.fromARGB(255, 37, 237, 160),
             ),
             ListTile(
-              title: const Text('Settings'),
+              title: const Text('Settings',
+                style: const TextStyle(
+                    color: Colors.white,
+                  fontSize: 25,
+                )),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => UserSettings()));
               },
             ),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Color.fromARGB(200, 96, 94, 92),
+            ),
             ListTile(
-              title: const Text('Item 2'),
+              title: const Text('TBD',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                  )),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                //to-do
               },
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Color.fromARGB(200, 96, 94, 92),
+            ),
+            ListTile(
+              title: const Text('TBD',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                  )),
+              onTap: () {
+                //to-do
+              },
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Color.fromARGB(200, 96, 94, 92),
+            ),
+            ListTile(
+              title: const Text('TBD',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                  )),
+              onTap: () {
+                //to-do
+              },
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Color.fromARGB(200, 96, 94, 92),
+            ),
+            ListTile(
+              title: const Text('TBD',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                  )),
+              onTap: () {
+                //to-do
+              },
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Color.fromARGB(200, 96, 94, 92),
+            ),
+            ListTile(
+              title: const Text('TBD',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                  )),
+              onTap: () {
+                //to-do
+              },
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+              color: Color.fromARGB(200, 96, 94, 92),
             ),
           ],
         ),
+
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
