@@ -67,7 +67,7 @@ class _chatRoomState extends State<chatRoom> {
       //appBar: AppBar(),
       body: chatRoomList(),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 37, 237, 160),
+        backgroundColor: Color.fromARGB(255, 255, 183, 255),
         child: Icon(Icons.search, color: Colors.black),
         onPressed: () {
           Navigator.push(
@@ -107,7 +107,7 @@ class chatRoomTiles extends StatelessWidget {
           SizedBox(
             width: 8,
           ),
-          Text(userName!, style: TextStyle(color: Colors.white)),
+          Text(userName!, style: TextStyle(color: Colors.white, fontSize: 20)),
         ]),
       ),
     );

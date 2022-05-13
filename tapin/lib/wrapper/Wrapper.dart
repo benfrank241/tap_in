@@ -89,7 +89,8 @@ class Wrapper {
   }
 
   getAllPosts() async {
-    return await FirebaseFirestore.instance.collection('posts').snapshots();
+    return await FirebaseFirestore.instance.collection('posts')
+        .orderBy('likes', descending: false).snapshots();
   }
 
   addComment(text, id) async {

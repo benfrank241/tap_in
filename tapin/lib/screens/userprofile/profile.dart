@@ -114,7 +114,8 @@ class _ProfileAppState extends State<ProfileApp> {
                   '$createdAt',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
@@ -123,11 +124,11 @@ class _ProfileAppState extends State<ProfileApp> {
           Row(children: [
             GestureDetector(
               onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              CommentScreen(creator, text, createdAt, id)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CommentScreen(creator, text, createdAt, id)));
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -296,7 +297,7 @@ class _ProfileAppState extends State<ProfileApp> {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   RaisedButton(
@@ -311,7 +312,7 @@ class _ProfileAppState extends State<ProfileApp> {
                           BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
                       alignment: Alignment.center,
                       child: Text(
-                        "Your posts",
+                        "Posts",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.0,
@@ -319,33 +320,33 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                     ),
                   ),
-                  // Text(
-                  //   "feed:",
-                  //   style: TextStyle(
-                  //       color: Colors.purpleAccent[100],
-                  //       fontStyle: FontStyle.normal,
-                  //       fontSize: 28.0),
-                  // ),
+                  Spacer(),
+                  RaisedButton(
+                    onPressed: () {},
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    elevation: 0.0,
+                    padding: EdgeInsets.all(0.0),
+                    child: Container(
+                      constraints:
+                      BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "//Comments",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 10.0,
                   ),
-                  // Text(
-                  //   'filler filler filler.\n'
-                  //   'temp temp temp.',
-                  //   style: TextStyle(
-                  //     fontSize: 22.0,
-                  //     fontStyle: FontStyle.italic,
-                  //     fontWeight: FontWeight.w300,
-                  //     color: Colors.black,
-                  //     letterSpacing: 2.0,
-                  //   ),
-                  // ),
                 ],
               ),
             ),
-          ),
-          SizedBox(
-            height: 20.0,
           ),
           yourPostList(),
         ],

@@ -69,7 +69,7 @@ class _ConversationState extends State<ConversationScreen> {
           Container(
             alignment: Alignment.bottomCenter,
             child: Container(
-              color: Color.fromARGB(82, 207, 19, 19),
+              color: Color.fromARGB(150, 255, 183, 255),
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
                 children: [
@@ -79,7 +79,7 @@ class _ConversationState extends State<ConversationScreen> {
                     decoration: InputDecoration(
                       hintText: 'Message',
                       hintStyle: TextStyle(
-                        color: Colors.grey,
+                        color: Colors.white,
                       ),
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
@@ -136,7 +136,7 @@ class messageTile extends StatelessWidget {
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: isSendbyMe
-                    ? [const Color(0xff007ef4), const Color(0xff2a75bc)]
+                    ? [const Color.fromARGB(255, 37, 237, 160), const Color.fromARGB(255, 37, 237, 160)]
                     : [const Color(0x1affffff), const Color(0x1affffff)]),
             borderRadius: isSendbyMe
                 ? BorderRadius.only(

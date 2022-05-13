@@ -75,21 +75,30 @@ class _CommentScreenState extends State<CommentScreen> {
   Widget CommentPostTile({required String comment, required String createdBy}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(children: [
-        Container(
-            height: 40,
-            width: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 37, 237, 160),
-              borderRadius: BorderRadius.circular(40),
-            ),
-            child: Text('${createdBy.substring(0, 1).toUpperCase()} ')),
-        SizedBox(
-          width: 8,
-        ),
-        Text(comment, style: TextStyle(color: Colors.white)),
-      ]),
+      child: Row(
+        children: [
+      Expanded(
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '@$createdBy',
+            overflow: TextOverflow.clip,
+            maxLines: 1,
+            style: const TextStyle(
+                color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
+          ),
+          Text(
+            comment,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ],
+      ),
+    ),
+    ],
+    ),
     );
   }
 
@@ -102,15 +111,23 @@ class _CommentScreenState extends State<CommentScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '@${widget.creator} - ${widget.createdAt}',
+                  '@${widget.creator}',
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 148, 144, 141)),
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 18),
                 ),
                 Text(
                   widget.text,
+                  // maxLines: 3,
+                  // overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontSize: 19),
+                ),
+                Text(
+                  '${widget.createdAt}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontSize: 17),
+                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
@@ -155,7 +172,9 @@ class _CommentScreenState extends State<CommentScreen> {
             children: [
               MainPost(),
               Divider(
-                color: Colors.blue,
+                height: 1,
+                thickness: 1,
+                color: Color.fromARGB(200, 96, 94, 92),
               ),
               allCommentsList(),
             ],
