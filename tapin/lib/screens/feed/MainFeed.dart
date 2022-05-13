@@ -56,21 +56,6 @@ class _MainFeed extends State<MainFeed> {
     );
   }
 
-  Future<int> getLikes(id) async {
-    int likes = -1;
-    await Wrapper().getPostLikes(id).then((val) {
-      Map thismodel = val.docs[0].data();
-      if (thismodel.isEmpty) {
-        print('fuck me');
-      }
-      ;
-      likes = thismodel['likes'];
-    });
-    print('likes in getlikes function');
-    print(likes);
-    return likes;
-  }
-
   Widget FeedPostTile(
       {required String creator,
       required String text,
@@ -99,7 +84,6 @@ class _MainFeed extends State<MainFeed> {
               ],
             ),
           ),
-
           //Spacer(),
           Column(children: [
             GestureDetector(
@@ -107,8 +91,8 @@ class _MainFeed extends State<MainFeed> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CommentScreen(
-                            creator, text, createdAt, likes, id)));
+                        builder: (context) =>
+                            CommentScreen(creator, text, createdAt, id)));
               },
               child: Container(
                 decoration: BoxDecoration(

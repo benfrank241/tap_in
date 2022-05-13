@@ -94,4 +94,17 @@ class Wrapper {
   getAllPosts() async {
     return await FirebaseFirestore.instance.collection('posts').snapshots();
   }
+
+  addComment(text, id) async {
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(id)
+        .collection('comments')
+        .add({
+      'createdBy': Constants.myName,
+      'timestamp': FieldValue.serverTimestamp(),
+      'createdAt': DateTime.now().millisecondsSinceEpoch,
+      'comment': text,
+    });
+  }
 }
