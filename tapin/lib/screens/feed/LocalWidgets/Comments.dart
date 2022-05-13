@@ -154,6 +154,9 @@ class _CommentScreenState extends State<CommentScreen> {
           child: Column(
             children: [
               MainPost(),
+              Divider(
+                color: Colors.blue,
+              ),
               allCommentsList(),
             ],
           ),

@@ -237,17 +237,17 @@ class _UserSettingsState extends State<UserSettings> {
             top: 21,
             left: 83,
             child: Container(
-                width: 24,
-                height: 24,
-                  child: IconButton(
-                      iconSize: 22,
-                      icon: Icon(Icons.search),
-                      color: Color.fromARGB(255, 50, 50, 50),
-                      onPressed: () {
-                      //search
-                      },
-                  ),
-                )),
+              width: 24,
+              height: 24,
+              child: IconButton(
+                iconSize: 22,
+                icon: Icon(Icons.search),
+                color: Color.fromARGB(255, 50, 50, 50),
+                onPressed: () {
+                  //search
+                },
+              ),
+            )),
         Positioned(
             top: 30,
             left: 118,
@@ -310,13 +310,13 @@ class _UserSettingsState extends State<UserSettings> {
                           width: 24,
                           height: 24,
                           child: Stack(children: <Widget>[
-                              IconButton(
-                                iconSize: 33,
-                                icon: Icon(Icons.arrow_drop_down),
-                                color: Color.fromARGB(255, 255, 183, 255),
-                                onPressed: () {
-                                  //notifications
-                                },
+                            IconButton(
+                              iconSize: 33,
+                              icon: Icon(Icons.arrow_drop_down),
+                              color: Color.fromARGB(255, 255, 183, 255),
+                              onPressed: () {
+                                //notifications
+                              },
                             ),
                           ]))),
                   Positioned(
@@ -467,24 +467,24 @@ class _UserSettingsState extends State<UserSettings> {
                             fontWeight: FontWeight.normal,
                             height: 1),
                       )),
-                  Positioned(
-                      top: 379,
-                      left: 324,
-                      child: Transform.rotate(
-                        angle: -180 * (pi / 180),
-                        child: Image.asset(
-                          'assets/images/vector.svg',
-                        ),
-                      )),
-                  Positioned(
-                      top: 416,
-                      left: 324,
-                      child: Transform.rotate(
-                        angle: -180 * (pi / 180),
-                        child: Image.asset(
-                          'assets/images/vector.svg',
-                        ),
-                      )),
+                  // Positioned(
+                  //     top: 379,
+                  //     left: 324,
+                  //     child: Transform.rotate(
+                  //       angle: -180 * (pi / 180),
+                  //       child: Image.asset(
+                  //         'assets/images/vector.svg',
+                  //       ),
+                  //     )),
+                  // Positioned(
+                  //     top: 416,
+                  //     left: 324,
+                  //     child: Transform.rotate(
+                  //       angle: -180 * (pi / 180),
+                  //       child: Image.asset(
+                  //         'assets/images/vector.svg',
+                  //       ),
+                  //     )),
                   Positioned(
                       top: 230,
                       left: 1,
