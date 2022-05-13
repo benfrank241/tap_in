@@ -73,11 +73,7 @@ class Wrapper {
   }
 
   getPostLikes(id) async {
-    return await FirebaseFirestore.instance
-        .collection('posts')
-        .doc(id)
-        .collection('reactions')
-        .get();
+    return await FirebaseFirestore.instance.collection('posts').doc(id).get();
   }
 
   getPostByContent(String Content) async {
@@ -106,5 +102,12 @@ class Wrapper {
       'createdAt': DateTime.now().millisecondsSinceEpoch,
       'comment': text,
     });
+  }
+
+  getAllComments(id) async {
+    return await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(id)
+        .snapshots();
   }
 }

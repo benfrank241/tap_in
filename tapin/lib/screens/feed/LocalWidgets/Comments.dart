@@ -16,6 +16,43 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  Stream? CommentsStream;
+
+  int likes = -1;
+
+  @override
+  void initState() {
+    getposts();
+    getlikes();
+    super.initState();
+  }
+
+  getposts() async {
+    await Wrapper().getAllComments(widget.id).then((val) {
+      setState(() {
+        CommentsStream = val;
+      });
+    });
+  }
+
+  getlikes() async {
+    print(widget.id);
+    await Wrapper().getPostLikes(widget.id).then((val) {
+      setState(() {
+        Map thismodel = val.data();
+        likes = thismodel['likes'];
+      });
+    });
+    print('${likes} this is in getLIKES INITSTATE');
+  }
+
+  addLike() async {
+    await Wrapper().addPostLike(widget.id, likes);
+    setState(() {
+      getlikes();
+    });
+  }
+
   Widget MainPost() {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -41,7 +78,7 @@ class _CommentScreenState extends State<CommentScreen> {
           Column(children: [
             GestureDetector(
               onTap: () {
-                //addLike(id, likes);
+                addLike();
               },
               child: Container(
                   height: 40,
@@ -62,7 +99,8 @@ class _CommentScreenState extends State<CommentScreen> {
                     width: 25,
                   )),
             ),
-            Text('${getLikes(widget.id)}'),
+            //Text('${getLikes(widget.id)}'),
+            Text('${likes}'),
           ]),
         ]));
   }
