@@ -22,12 +22,12 @@ class _CommentScreenState extends State<CommentScreen> {
 
   @override
   void initState() {
-    getposts();
     getlikes();
+    getComments();
     super.initState();
   }
 
-  getposts() async {
+  getComments() async {
     await Wrapper().getAllComments(widget.id).then((val) {
       setState(() {
         CommentsStream = val;
@@ -36,14 +36,12 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   getlikes() async {
-    print(widget.id);
     await Wrapper().getPostLikes(widget.id).then((val) {
       setState(() {
         Map thismodel = val.data();
         likes = thismodel['likes'];
       });
     });
-    print('${likes} this is in getLIKES INITSTATE');
   }
 
   addLike() async {
@@ -51,6 +49,48 @@ class _CommentScreenState extends State<CommentScreen> {
     setState(() {
       getlikes();
     });
+  }
+
+  Widget allCommentsList() {
+    return Expanded(
+      child: StreamBuilder(
+        stream: CommentsStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    Map thismodel = snapshot.data.docs[index].data();
+                    return CommentPostTile(
+                        comment: thismodel['comment'],
+                        createdBy: thismodel['createdBy']);
+                  })
+              : Container();
+        },
+      ),
+    );
+  }
+
+  Widget CommentPostTile({required String comment, required String createdBy}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(children: [
+        Container(
+            height: 40,
+            width: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 37, 237, 160),
+              borderRadius: BorderRadius.circular(40),
+            ),
+            child: Text('${createdBy.substring(0, 1).toUpperCase()} ')),
+        SizedBox(
+          width: 8,
+        ),
+        Text(comment, style: TextStyle(color: Colors.white)),
+      ]),
+    );
   }
 
   Widget MainPost() {
@@ -105,21 +145,6 @@ class _CommentScreenState extends State<CommentScreen> {
         ]));
   }
 
-  int getLikes(id) {
-    int likes = -1;
-    Wrapper().getPostLikes(id).then((val) {
-      Map thismodel = val.docs[0].data();
-      if (thismodel.isEmpty) {
-        print('fuck me');
-      }
-      ;
-      likes = thismodel['likes'];
-    });
-    print('likes in getlikes function');
-    print(likes);
-    return likes;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +154,7 @@ class _CommentScreenState extends State<CommentScreen> {
           child: Column(
             children: [
               MainPost(),
-              //AllPostList(),
+              allCommentsList(),
             ],
           ),
         ),

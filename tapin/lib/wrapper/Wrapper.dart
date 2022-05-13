@@ -108,6 +108,7 @@ class Wrapper {
     return await FirebaseFirestore.instance
         .collection('posts')
         .doc(id)
+        .collection('comments')
         .snapshots();
   }
 }
