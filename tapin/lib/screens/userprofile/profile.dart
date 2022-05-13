@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tapin/Constants.dart';
+import 'package:tapin/wrapper/Wrapper.dart';
 import '../../model/user_model.dart';
 import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 
@@ -19,6 +21,8 @@ class _ProfileAppState extends State<ProfileApp> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel LoggedInuser = UserModel();
 
+  Stream? yourPostStream;
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +34,121 @@ class _ProfileAppState extends State<ProfileApp> {
       this.LoggedInuser = UserModel.fromMap(value.data());
       setState(() {});
     });
+    GetYourPostsList();
+  }
+
+  GetYourPostsList() {
+    Wrapper().getPostsByUsername(Constants.myName).then((val) {
+      setState(() {
+        yourPostStream = val;
+      });
+    });
+  }
+
+  Widget yourPostList() {
+    return Expanded(
+      child: StreamBuilder(
+        stream: yourPostStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    Map thismodel = snapshot.data.docs[index].data();
+                    if (thismodel['timestamp'] == null) {
+                      return Container();
+                    }
+                    ;
+                    return FeedPostTile(
+                      creator: thismodel['username'],
+                      text: thismodel['text'],
+                      createdAt: thismodel['timestamp'].toDate().toString(),
+                      likes: thismodel['likes'],
+                      id: snapshot.data.docs[index].id,
+                    );
+                  })
+              : Container();
+        },
+      ),
+    );
+  }
+
+  Widget FeedPostTile(
+      {required String creator,
+      required String text,
+      required String createdAt,
+      required int likes,
+      required String id}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '@$creator - $createdAt',
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141)),
+                ),
+                Text(
+                  text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontSize: 17),
+                ),
+              ],
+            ),
+          ),
+          //Spacer(),
+          Column(children: [
+            // GestureDetector(
+            //   onTap: () {
+            //     //   Navigator.push(
+            //     //       context,
+            //     //       MaterialPageRoute(
+            //     //           builder: (context) =>
+            //     //               CommentScreen(creator, text, createdAt, id)));
+            //   },
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: Color.fromARGB(255, 37, 237, 160),
+            //       borderRadius: BorderRadius.circular(30),
+            //     ),
+            //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            //     child: Text('Tap In'),
+            //   ),
+            // ),
+            GestureDetector(
+              onTap: () {
+                // addLike(id, likes);
+              },
+              child: Container(
+                  height: 40,
+                  width: 40,
+                  // decoration: BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //         colors: [
+                  //           Color.fromARGB(54, 255, 255, 255),
+                  //           Color.fromARGB(255, 255, 255, 255)
+                  //         ],
+                  //         begin: FractionalOffset.topLeft,
+                  //         end: FractionalOffset.bottomRight),
+                  //     borderRadius: BorderRadius.circular(40)),
+                  //padding: EdgeInsets.all(12),
+                  child: Image.asset(
+                    "assets/images/fire.png",
+                    height: 25,
+                    width: 25,
+                  )),
+            ),
+            Text('$likes'),
+          ]),
+        ],
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -183,27 +302,27 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                     ),
                   ),
-                  Text(
-                    "feed:",
-                    style: TextStyle(
-                        color: Colors.purpleAccent[100],
-                        fontStyle: FontStyle.normal,
-                        fontSize: 28.0),
-                  ),
+                  // Text(
+                  //   "feed:",
+                  //   style: TextStyle(
+                  //       color: Colors.purpleAccent[100],
+                  //       fontStyle: FontStyle.normal,
+                  //       fontSize: 28.0),
+                  // ),
                   SizedBox(
                     height: 10.0,
                   ),
-                  Text(
-                    'filler filler filler.\n'
-                    'temp temp temp.',
-                    style: TextStyle(
-                      fontSize: 22.0,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black,
-                      letterSpacing: 2.0,
-                    ),
-                  ),
+                  // Text(
+                  //   'filler filler filler.\n'
+                  //   'temp temp temp.',
+                  //   style: TextStyle(
+                  //     fontSize: 22.0,
+                  //     fontStyle: FontStyle.italic,
+                  //     fontWeight: FontWeight.w300,
+                  //     color: Colors.black,
+                  //     letterSpacing: 2.0,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -211,39 +330,7 @@ class _ProfileAppState extends State<ProfileApp> {
           SizedBox(
             height: 20.0,
           ),
-          Container(
-            width: 300.00,
-            child: RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => UserSettings()));
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                elevation: 0.0,
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                        colors: [Colors.lightGreenAccent, Colors.pinkAccent]),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Container(
-                    constraints:
-                        BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Settings",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26.0,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                )),
-          ),
+          yourPostList(),
         ],
       ),
     );

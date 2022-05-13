@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:tapin/Constants.dart';
 
 class Wrapper {
@@ -109,6 +110,13 @@ class Wrapper {
         .collection('posts')
         .doc(id)
         .collection('comments')
+        .snapshots();
+  }
+
+  getPostsByUsername(username) async {
+    return await FirebaseFirestore.instance
+        .collection('posts')
+        .where('username', isEqualTo: username)
         .snapshots();
   }
 }

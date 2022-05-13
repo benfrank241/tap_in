@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tapin/Constants.dart';
 import 'package:tapin/screens/DirectChat/LocalWidgets/Conversation_screen.dart';
 import 'package:tapin/wrapper/Wrapper.dart';
-
+import 'package:flutter/cupertino.dart';
 import '../../helper/helperfunctions.dart';
 import '../../model/chat_model.dart';
 import '../posts/add.dart';
@@ -42,6 +42,10 @@ class _MainFeed extends State<MainFeed> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     Map thismodel = snapshot.data.docs[index].data();
+                    if (thismodel['timestamp'] == null) {
+                      return Container();
+                    }
+                    ;
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
@@ -159,6 +163,7 @@ class _MainFeed extends State<MainFeed> {
         },
         child: Icon(
           Icons.add,
+          //Icons.,
           color: Colors.black,
         ),
       ),
