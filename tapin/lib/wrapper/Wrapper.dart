@@ -56,21 +56,20 @@ class Wrapper {
   }
 
   savePost(text) async {
-    var docref = await FirebaseFirestore.instance.collection("posts").add({
+    await FirebaseFirestore.instance.collection("posts").add({
       'username': Constants.myName,
       'text': text,
       'timestamp': FieldValue.serverTimestamp(),
       'createdAt': DateTime.now().millisecondsSinceEpoch,
+      'likes': 0,
     });
-    initializePostReactions(docref.id);
   }
 
-  initializePostReactions(docref) {
-    FirebaseFirestore.instance
-        .collection('posts')
-        .doc(docref)
-        .collection('reactions')
-        .add({'likes': 0});
+  addPostLike(id, likes) async {
+    int newlikes = likes + 1;
+    await FirebaseFirestore.instance.collection('posts').doc(id).update({
+      'likes': newlikes,
+    });
   }
 
   getPostLikes(id) async {

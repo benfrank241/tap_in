@@ -7,6 +7,7 @@ import 'package:tapin/wrapper/Wrapper.dart';
 import '../../helper/helperfunctions.dart';
 import '../../model/chat_model.dart';
 import '../posts/add.dart';
+import 'LocalWidgets/Comments.dart';
 
 class MainFeed extends StatefulWidget {
   @override
@@ -40,17 +41,13 @@ class _MainFeed extends State<MainFeed> {
                   itemCount: snapshot.data.docs.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    int thislikes = -1;
-                    getLikes(snapshot.data.docs[index].id).then((value) => {
-                          thislikes = value,
-                        });
-                    print('this likes is ${thislikes}');
                     Map thismodel = snapshot.data.docs[index].data();
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
                       createdAt: thismodel['timestamp'].toDate().toString(),
-                      likes: thislikes,
+                      likes: thismodel['likes'],
+                      id: snapshot.data.docs[index].id,
                     );
                   })
               : Container();
@@ -78,9 +75,8 @@ class _MainFeed extends State<MainFeed> {
       {required String creator,
       required String text,
       required String createdAt,
-      required int likes}) {
-    print(likes);
-    print('likes in tile');
+      required int likes,
+      required String id}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -108,7 +104,11 @@ class _MainFeed extends State<MainFeed> {
           Column(children: [
             GestureDetector(
               onTap: () {
-                //viewProfile();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CommentScreen(
+                            creator, text, createdAt, likes, id)));
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -121,7 +121,7 @@ class _MainFeed extends State<MainFeed> {
             ),
             GestureDetector(
               onTap: () {
-                //initiateSearch();
+                addLike(id, likes);
               },
               child: Container(
                   height: 40,
@@ -142,11 +142,15 @@ class _MainFeed extends State<MainFeed> {
                     width: 25,
                   )),
             ),
-            Text(likes.toString()),
+            Text('$likes'),
           ]),
         ],
       ),
     );
+  }
+
+  addLike(id, likes) async {
+    await Wrapper().addPostLike(id, likes);
   }
 
   @override
