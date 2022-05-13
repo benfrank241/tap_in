@@ -77,9 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     //chatMain(),
+    //Tinder(),
     chatRoom(),
     MainFeed(),
-    //Tinder(),
     Discover(),
   ];
 
@@ -115,16 +115,16 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             const SizedBox(
               height: 150,
-        child: DrawerHeader(
-              child: Text(''),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 50, 50, 50),
-                image: DecorationImage(
+              child: DrawerHeader(
+                child: Text(''),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 50, 50, 50),
+                  image: DecorationImage(
                     image: AssetImage('assets/images/logo3.png'),
-                  fit: BoxFit.fitWidth,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
-              ),
-            ),
             ),
             Divider(
               height: 5,
@@ -133,10 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: const Text('Settings',
-                style: const TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
-                  fontSize: 25,
-                )),
+                    fontSize: 25,
+                  )),
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => UserSettings()));
@@ -224,7 +224,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

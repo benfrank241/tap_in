@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tapin/Constants.dart';
 
 class Wrapper {
   Future<void> updateFirestoreData(
@@ -52,6 +53,32 @@ class Wrapper {
         .collection('ChatRoom')
         .where('users', arrayContains: userName)
         .snapshots();
+  }
+
+  savePost(text) async {
+    var docref = await FirebaseFirestore.instance.collection("posts").add({
+      'username': Constants.myName,
+      'text': text,
+      'timestamp': FieldValue.serverTimestamp(),
+      'createdAt': DateTime.now().millisecondsSinceEpoch,
+    });
+    initializePostReactions(docref.id);
+  }
+
+  initializePostReactions(docref) {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(docref)
+        .collection('reactions')
+        .add({'likes': 0});
+  }
+
+  getPostLikes(id) async {
+    return await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(id)
+        .collection('reactions')
+        .get();
   }
 
   getPostByContent(String Content) async {

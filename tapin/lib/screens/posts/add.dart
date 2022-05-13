@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tapin/services/post.dart';
+import 'package:tapin/wrapper/Wrapper.dart';
 
 class Add extends StatefulWidget {
   Add({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _AddState extends State<Add> {
           FlatButton(
               textColor: Colors.white,
               onPressed: () async {
-                _postService.savePost(text);
+                Wrapper().savePost(text);
                 Navigator.pop(context);
               },
               child: Text('Post'))
