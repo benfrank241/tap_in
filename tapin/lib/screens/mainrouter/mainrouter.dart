@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:tapin/screens/feed/MainFeed.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
-import '../feed/swipe.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
 import '../posts/add.dart';

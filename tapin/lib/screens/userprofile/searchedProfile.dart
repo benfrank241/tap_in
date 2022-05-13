@@ -2,23 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tapin/Constants.dart';
+import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/wrapper/Wrapper.dart';
 import '../../model/user_model.dart';
 import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 import '../feed/LocalWidgets/Comments.dart';
 
 void main() => runApp(MaterialApp(
-      home: ProfileApp(),
+      home: SearchedProfileApp(),
     ));
 
-class ProfileApp extends StatefulWidget {
-  ProfileApp({Key? key}) : super(key: key);
+class SearchedProfileApp extends StatefulWidget {
+  SearchedProfileApp({Key? key}) : super(key: key);
 
   @override
-  _ProfileAppState createState() => new _ProfileAppState();
+  _SearchedProfileAppState createState() => new _SearchedProfileAppState();
 }
 
-class _ProfileAppState extends State<ProfileApp> {
+class _SearchedProfileAppState extends State<SearchedProfileApp> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel LoggedInuser = UserModel();
 

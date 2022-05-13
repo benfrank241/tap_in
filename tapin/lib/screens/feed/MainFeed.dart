@@ -67,7 +67,7 @@ class _MainFeed extends State<MainFeed> {
       required int likes,
       required String id}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       child: Row(
         children: [
           Expanded(
@@ -75,21 +75,29 @@ class _MainFeed extends State<MainFeed> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '@$creator - $createdAt',
+                  '@$creator',
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 148, 144, 141)),
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 18),
                 ),
                 Text(
                   text,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontSize: 19),
+                ),
+                Text(
+                  '$createdAt',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontSize: 17),
+                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
           ),
           //Spacer(),
-          Column(children: [
+          Row(children: [
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -104,7 +112,8 @@ class _MainFeed extends State<MainFeed> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Text('Tap In'),
+                child: Text('Tap In',
+                style: TextStyle(fontSize: 16)),
               ),
             ),
             GestureDetector(
@@ -130,7 +139,8 @@ class _MainFeed extends State<MainFeed> {
                     width: 25,
                   )),
             ),
-            Text('$likes'),
+            Text('$likes',
+              style: const TextStyle(color: Colors.white, fontSize: 15),),
           ]),
         ],
       ),

@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:tapin/screens/mainrouter/mainrouter.dart';
+import 'package:tapin/screens/userprofile/searchedProfile.dart';
 import '../../model/post.dart';
 import '../../model/user_model.dart';
 import '../../wrapper/Wrapper.dart';
+import '../feed/LocalWidgets/Comments.dart';
+import '../userprofile/profile.dart';
 
 class Discover extends StatefulWidget {
   @override
@@ -72,11 +75,12 @@ class DiscoverState extends State<Discover> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              //viewProfile();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => SearchedProfileApp()));
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.pink,
+                color: Color.fromARGB(255, 37, 237, 160),
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -128,6 +132,7 @@ class DiscoverState extends State<Discover> {
                         creator: thismodel['username'],
                         text: thismodel['text'],
                         createdAt: thismodel['timestamp'].toDate().toString(),
+                        id: snapshot.data.docs[index].id,
                       );
                     })
                 : Container();
@@ -140,7 +145,8 @@ class DiscoverState extends State<Discover> {
   Widget searchTilePost(
       {required String creator,
       required String text,
-      required String createdAt}) {
+      required String createdAt,
+      required String id}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -156,11 +162,15 @@ class DiscoverState extends State<Discover> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              //viewProfile();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CommentScreen(creator, text, createdAt, id)));
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.pink,
+                color: Color.fromARGB(255, 37, 237, 160),
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
