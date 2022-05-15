@@ -67,17 +67,20 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 100.0, horizontal: 8.0),
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
           ),
           TextFormField(
+            maxLength: 15,
             controller: displayName,
             onChanged: (text) {
               setState(() {});
               validateButton();
             },
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
             cursorColor: Colors.grey,
             decoration: InputDecoration(
+              //counterText: '',
+              counterStyle: TextStyle(fontSize: 12, color: Colors.white),
               prefixIcon: Icon(Icons.person,
                   color: const Color.fromARGB(255, 96, 94, 92)),
               hintText: "display name",

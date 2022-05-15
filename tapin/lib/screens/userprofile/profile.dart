@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tapin/Constants.dart';
 import 'package:tapin/wrapper/Wrapper.dart';
 import '../../model/user_model.dart';
@@ -216,73 +217,27 @@ class _ProfileAppState extends State<ProfileApp> {
                         ),
                         radius: 50.0,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 100),
+                          RawMaterialButton(
+                            fillColor: Color.fromARGB(255, 255, 183, 255),
+                            shape: CircleBorder(),
+                            child: Icon(Icons.add_a_photo,
+                              color: Colors.black,
+                              size: 18),
+                            onPressed: () {
+                              Fluttertoast.showToast(msg: 'To be implemented');
+                            },
+                          ),
+                        ],
+                      ),
                       Text(
                         '@${LoggedInuser.username}',
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
-                      Card(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 5.0),
-                        clipBehavior: Clip.antiAlias,
-                        color: Colors.transparent,
-                        elevation: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 28.0),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Following",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "345",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Communities",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "26",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
+                      SizedBox(height: 15),
                     ],
                   ),
                 ),
@@ -322,7 +277,9 @@ class _ProfileAppState extends State<ProfileApp> {
                   ),
                   Spacer(),
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Fluttertoast.showToast(msg: 'To be implemented');
+                    },
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
@@ -333,7 +290,7 @@ class _ProfileAppState extends State<ProfileApp> {
                       BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
                       alignment: Alignment.center,
                       child: Text(
-                        "//Comments",
+                        "Comments",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.0,

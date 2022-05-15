@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tapin/Constants.dart';
 import 'package:tapin/screens/userprofile/profile.dart';
 import 'package:tapin/wrapper/Wrapper.dart';
@@ -280,7 +281,7 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   RaisedButton(
@@ -303,13 +304,29 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                       ),
                     ),
                   ),
-                  // Text(
-                  //   "feed:",
-                  //   style: TextStyle(
-                  //       color: Colors.purpleAccent[100],
-                  //       fontStyle: FontStyle.normal,
-                  //       fontSize: 28.0),
-                  // ),
+                  Spacer(),
+                  RaisedButton(
+                    onPressed: () {
+                      Fluttertoast.showToast(msg: 'To be implemented');
+                    },
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    elevation: 0.0,
+                    padding: EdgeInsets.all(0.0),
+                    child: Container(
+                      constraints:
+                      BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Comments",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 10.0,
                   ),

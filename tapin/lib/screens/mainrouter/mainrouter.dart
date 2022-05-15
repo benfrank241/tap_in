@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tapin/Constants.dart';
 import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
@@ -153,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 25,
                   )),
               onTap: () {
-                //to-do
+                Fluttertoast.showToast(msg: 'To be implemented');
               },
             ),
             Divider(
@@ -168,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 25,
                   )),
               onTap: () {
-                //to-do
+                Fluttertoast.showToast(msg: 'To be implemented');
               },
             ),
             Divider(
@@ -183,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 25,
                   )),
               onTap: () {
-                //to-do
+                Fluttertoast.showToast(msg: 'To be implemented');
               },
             ),
             Divider(
@@ -198,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 25,
                   )),
               onTap: () {
-                //to-do
+                Fluttertoast.showToast(msg: 'To be implemented');
               },
             ),
             Divider(
@@ -213,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 25,
                   )),
               onTap: () {
-                //to-do
+                Fluttertoast.showToast(msg: 'To be implemented');
               },
             ),
             Divider(
