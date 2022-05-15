@@ -91,7 +91,8 @@ class _MainFeed extends State<MainFeed> {
                   '$createdAt',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
@@ -112,8 +113,7 @@ class _MainFeed extends State<MainFeed> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Text('Tap In',
-                style: TextStyle(fontSize: 16)),
+                child: Text('Tap In', style: TextStyle(fontSize: 16)),
               ),
             ),
             GestureDetector(
@@ -139,8 +139,10 @@ class _MainFeed extends State<MainFeed> {
                     width: 25,
                   )),
             ),
-            Text('$likes',
-              style: const TextStyle(color: Colors.white, fontSize: 15),),
+            Text(
+              '$likes',
+              style: const TextStyle(color: Colors.white, fontSize: 15),
+            ),
           ]),
         ],
       ),
@@ -151,10 +153,62 @@ class _MainFeed extends State<MainFeed> {
     await Wrapper().addPostLike(id, likes);
   }
 
+  showFilterDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Filters:'),
+          actions: [
+            ButtonBar(
+              alignment: MainAxisAlignment.start,
+              buttonPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              children: [
+                RaisedButton(
+                  child: Text("Newest"),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {},
+                ),
+                RaisedButton(
+                  child: Text("Most Likes"),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {},
+                ),
+                RaisedButton(
+                  child: Text("Most Comments"),
+                  textColor: Colors.white,
+                  color: Colors.green,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(),
+      appBar: AppBar(title: Text('HA!'), actions: [
+        Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                showFilterDialog(context);
+              },
+              child: Icon(Icons.filter_list),
+            )),
+      ]),
       body: Container(
         child: Container(
           child: Column(
