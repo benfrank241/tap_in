@@ -17,6 +17,8 @@ class MainFeed extends StatefulWidget {
 class _MainFeed extends State<MainFeed> {
   Stream? PostsStream;
 
+  String FilterState = 'Newest';
+
   @override
   void initState() {
     getposts();
@@ -24,11 +26,25 @@ class _MainFeed extends State<MainFeed> {
   }
 
   getposts() async {
-    Wrapper().getAllPosts().then((val) {
-      setState(() {
-        PostsStream = val;
+    if (FilterState == 'Newest') {
+      Wrapper().getAllPosts().then((val) {
+        setState(() {
+          PostsStream = val;
+        });
       });
-    });
+    } else if (FilterState == 'Most Liked') {
+      Wrapper().getAllPosts().then((val) {
+        setState(() {
+          PostsStream = val;
+        });
+      });
+    } else if (FilterState == 'Most Commented') {
+      Wrapper().getAllPosts().then((val) {
+        setState(() {
+          PostsStream = val;
+        });
+      });
+    }
   }
 
   Widget AllPostList() {
@@ -168,19 +184,31 @@ class _MainFeed extends State<MainFeed> {
                   child: Text("Newest"),
                   textColor: Colors.white,
                   color: Colors.green,
-                  onPressed: () {},
+                  onPressed: () {
+                    FilterState = "Newest";
+                    getposts();
+                    Navigator.pop(context);
+                  },
                 ),
                 RaisedButton(
-                  child: Text("Most Likes"),
+                  child: Text("Most Liked"),
                   textColor: Colors.white,
                   color: Colors.green,
-                  onPressed: () {},
+                  onPressed: () {
+                    FilterState = "Most Liked";
+                    getposts();
+                    Navigator.pop(context);
+                  },
                 ),
                 RaisedButton(
-                  child: Text("Most Comments"),
+                  child: Text("Most Commented"),
                   textColor: Colors.white,
                   color: Colors.green,
-                  onPressed: () {},
+                  onPressed: () {
+                    FilterState = "Most Commented";
+                    getposts();
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -199,7 +227,7 @@ class _MainFeed extends State<MainFeed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('HA!'), actions: [
+      appBar: AppBar(title: Text('${FilterState}'), actions: [
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
