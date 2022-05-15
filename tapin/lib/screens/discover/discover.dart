@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:tapin/Constants.dart';
 import 'package:tapin/screens/mainrouter/mainrouter.dart';
 import 'package:tapin/screens/userprofile/searchedProfile.dart';
 import '../../model/post.dart';
@@ -75,8 +76,16 @@ class DiscoverState extends State<Discover> {
           Spacer(),
           GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => SearchedProfileApp()));
+              if (Constants.myName == userName) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ProfileApp()));
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SearchedProfileApp(
+                          username: userName,
+                        )));
+              }
+              ;
             },
             child: Container(
               decoration: BoxDecoration(
@@ -174,7 +183,8 @@ class DiscoverState extends State<Discover> {
                   '$createdAt',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
@@ -195,8 +205,7 @@ class DiscoverState extends State<Discover> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Text('Tap In',
-                    style: TextStyle(fontSize: 16)),
+                child: Text('Tap In', style: TextStyle(fontSize: 16)),
               ),
             ),
             GestureDetector(
@@ -222,8 +231,10 @@ class DiscoverState extends State<Discover> {
                     width: 25,
                   )),
             ),
-            Text('$likes',
-              style: const TextStyle(color: Colors.white, fontSize: 15),),
+            Text(
+              '$likes',
+              style: const TextStyle(color: Colors.white, fontSize: 15),
+            ),
           ]),
         ],
       ),

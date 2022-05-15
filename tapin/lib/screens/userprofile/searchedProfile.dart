@@ -8,12 +8,10 @@ import '../../model/user_model.dart';
 import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 import '../feed/LocalWidgets/Comments.dart';
 
-void main() => runApp(MaterialApp(
-      home: SearchedProfileApp(),
-    ));
-
 class SearchedProfileApp extends StatefulWidget {
-  SearchedProfileApp({Key? key}) : super(key: key);
+  final String username;
+
+  SearchedProfileApp({required this.username});
 
   @override
   _SearchedProfileAppState createState() => new _SearchedProfileAppState();
@@ -28,27 +26,11 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
   @override
   void initState() {
     super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.LoggedInuser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-    GetYourPostsList();
+    GetUserPostsList();
   }
 
-  GetYourPostsList() {
-    Wrapper().getPostsByUsername(Constants.myName).then((val) {
-      setState(() {
-        yourPostStream = val;
-      });
-    });
-  }
-
-  GetTheirPostsList(String searchedUser) {
-    Wrapper().getPostsByUsername(searchedUser).then((val) {
+  GetUserPostsList() {
+    Wrapper().getPostsByUsername(widget.username).then((val) {
       setState(() {
         yourPostStream = val;
       });
@@ -115,7 +97,8 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                   '$createdAt',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
@@ -124,11 +107,11 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
           Row(children: [
             GestureDetector(
               onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              CommentScreen(creator, text, createdAt, id)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CommentScreen(creator, text, createdAt, id)));
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -217,7 +200,7 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                         radius: 50.0,
                       ),
                       Text(
-                        '@${LoggedInuser.username}',
+                        '@${widget.username}',
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
                       Card(
@@ -312,7 +295,7 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                           BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
                       alignment: Alignment.center,
                       child: Text(
-                        "Your posts",
+                        "${widget.username}'s posts",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.0,
