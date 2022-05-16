@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       // OurLogin(),
       routes: {
         //'/': (context) => Feed(),
-        //'/': ((context) => ImageUploads()),
+        //'/': ((context) => Imageuploader()),
         '/': (context) => OurLogin(),
         //'/': (context) => chatRoom(),
         '/profileapp': (context) => ProfileApp(),

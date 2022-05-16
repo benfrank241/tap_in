@@ -1,139 +1,57 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart';
 
-class ImageUploads extends StatefulWidget {
-  ImageUploads({Key? key}) : super(key: key);
-
+class Imageuploader extends StatefulWidget {
   @override
-  _ImageUploadsState createState() => _ImageUploadsState();
+  _ImageUploader createState() => _ImageUploader();
 }
 
-class _ImageUploadsState extends State<ImageUploads> {
-  firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
+class _ImageUploader extends State<Imageuploader> {
+  PlatformFile? pickedFile;
 
-  File? _photo;
-  final ImagePicker _picker = ImagePicker();
+  Future SelectFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
 
-  Future imgFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  Future imgFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    if (result == null) return;
 
     setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        print('No image selected.');
-      }
+      pickedFile = result.files.first;
     });
-  }
-
-  Future uploadFile() async {
-    if (_photo == null) return;
-    final fileName = basename(_photo!.path);
-    final destination = 'files/$fileName';
-
-    try {
-      final ref = firebase_storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!);
-    } catch (e) {
-      print('error occured');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 32,
-          ),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                _showPicker(context);
-              },
-              child: CircleAvatar(
-                radius: 55,
-                backgroundColor: Color(0xffFDCF09),
-                child: _photo != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.file(
-                          _photo!,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.fitHeight,
-                        ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(50)),
-                        width: 100,
-                        height: 100,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.grey[800],
-                        ),
-                      ),
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (pickedFile != null)
+            Expanded(
+              child: Container(
+                child: Center(
+                    child: Image.file(
+                  File(pickedFile!.path!),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )),
               ),
             ),
-          )
+          ElevatedButton(onPressed: () {}, child: Text('Upload')),
+          ElevatedButton(
+              onPressed: () {
+                SelectFile();
+              },
+              child: Text('Select')),
         ],
       ),
-    );
-  }
-
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Gallery'),
-                      onTap: () {
-                        imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+    ));
   }
 }
