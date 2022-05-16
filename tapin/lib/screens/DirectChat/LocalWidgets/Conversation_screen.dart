@@ -19,11 +19,17 @@ class _ConversationState extends State<ConversationScreen> {
 
   Stream? chatMessageStream;
 
+  ScrollController listScrollController = ScrollController();
+
   String ConvertChatId() {
     String id = widget.chatroomId;
     List<String> ids = id.split("_");
-    return ids.join(' and ');
+    if (ids[0] == Constants.myName){
+      return ids[1];
+    }
+    return ids[0];
   }
+
 
   Widget ChatMessageList() {
     return StreamBuilder(
@@ -31,6 +37,8 @@ class _ConversationState extends State<ConversationScreen> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return snapshot.hasData
               ? ListView.builder(
+            padding: EdgeInsets.only(bottom: 80),
+            controller: listScrollController,
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     chatModel thismodel =
@@ -72,6 +80,23 @@ class _ConversationState extends State<ConversationScreen> {
         centerTitle: true,
         title: Text(ConvertChatId()),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 255, 183, 255),
+        onPressed: () {
+          if (listScrollController.hasClients) {
+            final position = listScrollController.position.maxScrollExtent;
+            listScrollController.animateTo(
+              position,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+            );
+          }
+        },
+        isExtended: true,
+        tooltip: "Scroll to Bottom",
+        child: Icon(Icons.arrow_downward, color: Colors.black,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       body: Stack(
         children: [
           ChatMessageList(),
@@ -137,7 +162,7 @@ class messageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          left: isSendbyMe ? 0 : 24, right: isSendbyMe ? 24 : 0),
+          left: isSendbyMe ? 80 : 24, right: isSendbyMe ? 24 : 80),
       margin: EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width,
       alignment: isSendbyMe ? Alignment.centerRight : Alignment.centerLeft,

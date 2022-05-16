@@ -73,7 +73,7 @@ class _MainFeed extends State<MainFeed> {
                       createdAt: thismodel['timestamp']
                           .toDate()
                           .toString()
-                          .substring(0, 19),
+                          .substring(5, 16),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );

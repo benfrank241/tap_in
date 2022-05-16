@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       // OurLogin(),
       routes: {
         //'/': (context) => Feed(),
-        '/': ((context) => ImageUploads()),
-        //'/': (context) => OurLogin(),
+        //'/': ((context) => ImageUploads()),
+        '/': (context) => OurLogin(),
         //'/': (context) => chatRoom(),
         '/profileapp': (context) => ProfileApp(),
         '/mainrouter': (context) => mainRouter(),

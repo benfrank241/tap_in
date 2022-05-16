@@ -187,7 +187,7 @@ class DiscoverState extends State<Discover> {
                       return searchTilePost(
                         creator: thismodel['username'],
                         text: thismodel['text'],
-                        createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
+                        createdAt: thismodel['timestamp'].toDate().toString().substring(5,16),
                         id: snapshot.data.docs[index].id,
                         likes: thismodel['likes'],
                       );

@@ -73,7 +73,7 @@ class _ProfileAppState extends State<ProfileApp> {
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
-                      createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
+                      createdAt: thismodel['timestamp'].toDate().toString().substring(5,16),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );
