@@ -52,6 +52,7 @@ dependencies:
   font_awesome_flutter:
   flutter_bloc: ^8.0.1
   image_picker: ^0.8.5
+  file_picker:
   #equatable: 
   #meta: 
   #dio: 
