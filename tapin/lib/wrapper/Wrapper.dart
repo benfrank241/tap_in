@@ -129,6 +129,7 @@ class Wrapper {
         .collection('posts')
         .doc(id)
         .collection('comments')
+        .orderBy('createdAt', descending: true)
         .snapshots();
   }
 

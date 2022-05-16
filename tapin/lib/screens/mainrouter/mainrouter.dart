@@ -13,9 +13,7 @@ import 'package:tapin/screens/userprofile/profile.dart';
 import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 import '../groupchat/chatMain.dart';
 import '../groupchat/homePage.dart';
-import '../posts/add.dart';
 import '../userprofile/profile.dart';
-import '../posts/add.dart';
 
 void main() => runApp(new mainRouter());
 

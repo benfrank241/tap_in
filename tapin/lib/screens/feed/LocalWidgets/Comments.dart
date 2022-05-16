@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../wrapper/Wrapper.dart';
-import 'addComment.dart';
 
 class CommentScreen extends StatefulWidget {
   final String creator;
@@ -17,6 +17,7 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   Stream? CommentsStream;
+  TextEditingController commentText = TextEditingController();
 
   int likes = -1;
 
@@ -62,10 +63,16 @@ class _CommentScreenState extends State<CommentScreen> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     Map thismodel = snapshot.data.docs[index].data();
+                    if (thismodel['timestamp'] == null) {
+                      return Container();
+                    }
                     return CommentPostTile(
-                        comment: thismodel['comment'],
-                        createdBy: thismodel['createdBy'],
-                        createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
+                      comment: thismodel['comment'],
+                      createdBy: thismodel['createdBy'],
+                      createdAt: thismodel['timestamp']
+                          .toDate()
+                          .toString()
+                          .substring(0, 19),
                     );
                   })
               : Container();
@@ -74,27 +81,33 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 
-  Widget CommentPostTile({required String comment, required String createdBy, required createdAt}) {
+  Widget CommentPostTile(
+      {required String comment,
+      required String createdBy,
+      required createdAt}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
-      Expanded(
-      child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '@$createdBy',
-            overflow: TextOverflow.clip,
-            maxLines: 1,
-            style: const TextStyle(
-                color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
-          ),
-          Text(
-            comment,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '@$createdBy',
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
+                ),
+                Text(
+                  comment,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ],
+            ),
           ),
           Text(
             '$createdAt',
@@ -105,9 +118,6 @@ class _CommentScreenState extends State<CommentScreen> {
           ),
         ],
       ),
-    ),
-    ],
-    ),
     );
   }
 
@@ -133,10 +143,11 @@ class _CommentScreenState extends State<CommentScreen> {
                   style: const TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
-                  '${widget.createdAt.substring(0,19)}',
+                  '${widget.createdAt.substring(0, 19)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
                 ),
               ],
             ),
@@ -166,9 +177,47 @@ class _CommentScreenState extends State<CommentScreen> {
                   )),
             ),
             //Text('${getLikes(widget.id)}'),
-            Text('${likes}', style: TextStyle(color: Colors.white)),
+            Text(
+              '${likes}',
+              style: TextStyle(color: Colors.white),
+            ),
           ]),
         ]));
+  }
+
+  addCommentPopUp(context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Add Comment:'),
+            content: TextField(
+              controller: commentText,
+              //decoration: InputDecoration(hintText: "Add Post"),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('CANCEL'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () async {
+                  if (commentText.text == '') {
+                    Fluttertoast.showToast(msg: 'Please enter some text');
+                  } else {
+                    Wrapper().addComment(commentText.text, widget.id);
+                    Fluttertoast.showToast(msg: 'Posted');
+                    commentText.clear();
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -205,8 +254,7 @@ class _CommentScreenState extends State<CommentScreen> {
         heroTag: null,
         backgroundColor: Color.fromARGB(255, 255, 183, 255),
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => addComment(widget.id)));
+          addCommentPopUp(context);
         },
         child: Icon(
           Icons.message_sharp,

@@ -7,7 +7,6 @@ import 'package:tapin/wrapper/Wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import '../../helper/helperfunctions.dart';
 import '../../model/chat_model.dart';
-import '../posts/add.dart';
 import 'LocalWidgets/Comments.dart';
 
 class MainFeed extends StatefulWidget {
@@ -17,6 +16,7 @@ class MainFeed extends StatefulWidget {
 
 class _MainFeed extends State<MainFeed> {
   Stream? PostsStream;
+  TextEditingController postText = TextEditingController();
 
   String FilterState = 'Newest';
 
@@ -64,10 +64,16 @@ class _MainFeed extends State<MainFeed> {
                       return Container();
                     }
                     ;
+                    if (thismodel['text'] == null) {
+                      return Container();
+                    }
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
-                      createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
+                      createdAt: thismodel['timestamp']
+                          .toDate()
+                          .toString()
+                          .substring(0, 19),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );
@@ -107,13 +113,14 @@ class _MainFeed extends State<MainFeed> {
                 ),
                 Container(
                   width: 180,
-                child: Text(
-                  '$createdAt',
-                   maxLines: 1,
-                   overflow: TextOverflow.visible,
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
-                ),
+                  child: Text(
+                    '$createdAt',
+                    maxLines: 1,
+                    overflow: TextOverflow.visible,
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 148, 144, 141),
+                        fontSize: 15),
+                  ),
                 ),
               ],
             ),
@@ -153,7 +160,7 @@ class _MainFeed extends State<MainFeed> {
                   //         begin: FractionalOffset.topLeft,
                   //         end: FractionalOffset.bottomRight),
                   //     borderRadius: BorderRadius.circular(40)),
-                  //padding: EdgeInsets.all(12),
+                  // padding: EdgeInsets.all(12),
                   child: Image.asset(
                     "assets/images/fire.png",
                     height: 25,
@@ -179,16 +186,24 @@ class _MainFeed extends State<MainFeed> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Filters:'),
+          backgroundColor: Color.fromARGB(255, 50, 50, 50),
+          title: Text(
+            'Filters:',
+            style: TextStyle(color: Color.fromARGB(255, 196, 196, 196)),
+          ),
           actions: [
             ButtonBar(
-              alignment: MainAxisAlignment.start,
+              alignment: MainAxisAlignment.center,
+              buttonMinWidth: 300,
               buttonPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               children: [
                 RaisedButton(
-                  child: Text("Newest"),
-                  textColor: Colors.white,
-                  color: Colors.green,
+                  child: Text(
+                    "Newest",
+                    // style: TextStyle(color: Colors.black),
+                  ),
+                  textColor: Colors.black,
+                  color: Color.fromARGB(255, 196, 196, 196),
                   onPressed: () {
                     FilterState = "Newest";
                     getposts();
@@ -197,8 +212,8 @@ class _MainFeed extends State<MainFeed> {
                 ),
                 RaisedButton(
                   child: Text("Most Liked"),
-                  textColor: Colors.white,
-                  color: Colors.green,
+                  textColor: Colors.black,
+                  color: Color.fromARGB(255, 196, 196, 196),
                   onPressed: () {
                     FilterState = "Most Liked";
                     getposts();
@@ -207,8 +222,8 @@ class _MainFeed extends State<MainFeed> {
                 ),
                 RaisedButton(
                   child: Text("Most Commented"),
-                  textColor: Colors.white,
-                  color: Colors.green,
+                  textColor: Colors.black,
+                  color: Color.fromARGB(255, 196, 196, 196),
                   onPressed: () {
                     FilterState = "Most Commented";
                     getposts();
@@ -218,7 +233,12 @@ class _MainFeed extends State<MainFeed> {
               ],
             ),
             FlatButton(
-              child: Text('CANCEL'),
+              child: Text(
+                'CANCEL',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 196, 196, 196),
+                ),
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -227,6 +247,41 @@ class _MainFeed extends State<MainFeed> {
         );
       },
     );
+  }
+
+  addPostPopUp(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Add Post:'),
+            content: TextField(
+              controller: postText,
+              //decoration: InputDecoration(hintText: "Add Post"),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('CANCEL'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () async {
+                  if (postText.text == '') {
+                    Fluttertoast.showToast(msg: 'Please enter some text');
+                  } else {
+                    Wrapper().savePost(postText.text);
+                    Fluttertoast.showToast(msg: 'Posted');
+                    postText.clear();
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -255,8 +310,9 @@ class _MainFeed extends State<MainFeed> {
         heroTag: null,
         backgroundColor: Color.fromARGB(255, 255, 183, 255),
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => Add()));
+          //   Navigator.of(context)
+          //      .push(MaterialPageRoute(builder: (context) => Add()));
+          addPostPopUp(context);
         },
         child: Icon(
           Icons.add,
