@@ -89,11 +89,26 @@ class Wrapper {
   }
 
   getAllPosts() async {
+    return await FirebaseFirestore.instance.collection('posts').snapshots();
+  }
+
+  getAllPostsByLikes() async {
     return await FirebaseFirestore.instance
         .collection('posts')
-        .orderBy('likes', descending: false)
+        .orderBy('likes', descending: true)
         .snapshots();
   }
+
+  getAllPostsByNewest() async {
+    return await FirebaseFirestore.instance
+        .collection('posts')
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+  }
+
+  // getAllPostsByComments() async {
+
+  // }
 
   addComment(text, id) async {
     await FirebaseFirestore.instance
