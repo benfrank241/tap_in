@@ -73,6 +73,9 @@ class _searchScreenState extends State<searchScreen> {
   getChatRoomId(String a, String b) {
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
       return "$b\_$a";
+    } else if (a.substring(0, 1).codeUnitAt(0) ==
+        b.substring(0, 1).codeUnitAt(0)) {
+      return "$a\_$b";
     } else {
       return "$a\_$b";
     }

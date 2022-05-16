@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tapin/Constants.dart';
 import 'package:tapin/screens/DirectChat/LocalWidgets/Conversation_screen.dart';
 import 'package:tapin/wrapper/Wrapper.dart';
@@ -27,18 +28,19 @@ class _MainFeed extends State<MainFeed> {
 
   getposts() async {
     if (FilterState == 'Newest') {
-      Wrapper().getAllPosts().then((val) {
+      Wrapper().getAllPostsByNewest().then((val) {
         setState(() {
           PostsStream = val;
         });
       });
     } else if (FilterState == 'Most Liked') {
-      Wrapper().getAllPosts().then((val) {
+      Wrapper().getAllPostsByLikes().then((val) {
         setState(() {
           PostsStream = val;
         });
       });
     } else if (FilterState == 'Most Commented') {
+      Fluttertoast.showToast(msg: 'TO BE IMPLEMENTED');
       Wrapper().getAllPosts().then((val) {
         setState(() {
           PostsStream = val;
