@@ -73,7 +73,7 @@ class _ProfileAppState extends State<ProfileApp> {
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
-                      createdAt: thismodel['timestamp'].toDate().toString(),
+                      createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );
@@ -163,7 +163,7 @@ class _ProfileAppState extends State<ProfileApp> {
                     width: 25,
                   )),
             ),
-            Text('$likes'),
+            Text('$likes', style: TextStyle(color: Colors.white),),
           ]),
         ],
       ),
@@ -298,12 +298,18 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+
                 ],
               ),
             ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: Color.fromARGB(200, 96, 94, 92),
           ),
           yourPostList(),
         ],

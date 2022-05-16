@@ -19,6 +19,12 @@ class _ConversationState extends State<ConversationScreen> {
 
   Stream? chatMessageStream;
 
+  String ConvertChatId() {
+    String id = widget.chatroomId;
+    List<String> ids = id.split("_");
+    return ids.join(' and ');
+  }
+
   Widget ChatMessageList() {
     return StreamBuilder(
         stream: chatMessageStream,
@@ -62,14 +68,17 @@ class _ConversationState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(ConvertChatId()),
+      ),
       body: Stack(
         children: [
           ChatMessageList(),
           Container(
             alignment: Alignment.bottomCenter,
             child: Container(
-              color: Color.fromARGB(150, 255, 183, 255),
+              color: Color.fromARGB(200, 96, 94, 92),
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
                 children: [
@@ -106,6 +115,7 @@ class _ConversationState extends State<ConversationScreen> {
                           "assets/images/send.png",
                           height: 25,
                           width: 25,
+                          color: Colors.black,
                         )),
                   ),
                 ],
@@ -137,7 +147,7 @@ class messageTile extends StatelessWidget {
             gradient: LinearGradient(
                 colors: isSendbyMe
                     ? [const Color.fromARGB(255, 37, 237, 160), const Color.fromARGB(255, 37, 237, 160)]
-                    : [const Color(0x1affffff), const Color(0x1affffff)]),
+                    : [const Color.fromARGB(255, 255, 183, 255), Color.fromARGB(255, 255, 183, 255)]),
             borderRadius: isSendbyMe
                 ? BorderRadius.only(
                     topLeft: Radius.circular(23),
@@ -152,7 +162,7 @@ class messageTile extends StatelessWidget {
         child: Text(
           message!,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 17,
           ),
         ),

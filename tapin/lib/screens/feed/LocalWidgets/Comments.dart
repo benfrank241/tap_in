@@ -64,7 +64,9 @@ class _CommentScreenState extends State<CommentScreen> {
                     Map thismodel = snapshot.data.docs[index].data();
                     return CommentPostTile(
                         comment: thismodel['comment'],
-                        createdBy: thismodel['createdBy']);
+                        createdBy: thismodel['createdBy'],
+                        createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
+                    );
                   })
               : Container();
         },
@@ -72,7 +74,7 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 
-  Widget CommentPostTile({required String comment, required String createdBy}) {
+  Widget CommentPostTile({required String comment, required String createdBy, required createdAt}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -93,6 +95,13 @@ class _CommentScreenState extends State<CommentScreen> {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          Text(
+            '$createdAt',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
           ),
         ],
       ),
@@ -124,7 +133,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   style: const TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
-                  '${widget.createdAt}',
+                  '${widget.createdAt.substring(0,19)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
@@ -157,7 +166,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   )),
             ),
             //Text('${getLikes(widget.id)}'),
-            Text('${likes}'),
+            Text('${likes}', style: TextStyle(color: Colors.white)),
           ]),
         ]));
   }
@@ -175,6 +184,17 @@ class _CommentScreenState extends State<CommentScreen> {
                 height: 1,
                 thickness: 1,
                 color: Color.fromARGB(200, 96, 94, 92),
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: 'Comments',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                ),
               ),
               allCommentsList(),
             ],

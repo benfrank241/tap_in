@@ -56,7 +56,7 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
-                      createdAt: thismodel['timestamp'].toDate().toString(),
+                      createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );
@@ -146,7 +146,7 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                     width: 25,
                   )),
             ),
-            Text('$likes'),
+            Text('$likes', style: TextStyle(color: Colors.white)),
           ]),
         ],
       ),
@@ -200,73 +200,27 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                         ),
                         radius: 50.0,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 100),
+                          RawMaterialButton(
+                            fillColor: Color.fromARGB(255, 255, 183, 255),
+                            shape: CircleBorder(),
+                            child: Icon(Icons.add_a_photo,
+                                color: Colors.black,
+                                size: 18),
+                            onPressed: () {
+                              Fluttertoast.showToast(msg: 'To be implemented');
+                            },
+                          ),
+                        ],
+                      ),
                       Text(
                         '@${widget.username}',
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
-                      Card(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 5.0),
-                        clipBehavior: Clip.antiAlias,
-                        color: Colors.transparent,
-                        elevation: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 28.0),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Following",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "345",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "Communities",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "26",
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
+                      SizedBox(height: 15),
                     ],
                   ),
                 ),
@@ -327,26 +281,17 @@ class _SearchedProfileAppState extends State<SearchedProfileApp> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  // Text(
-                  //   'filler filler filler.\n'
-                  //   'temp temp temp.',
-                  //   style: TextStyle(
-                  //     fontSize: 22.0,
-                  //     fontStyle: FontStyle.italic,
-                  //     fontWeight: FontWeight.w300,
-                  //     color: Colors.black,
-                  //     letterSpacing: 2.0,
-                  //   ),
-                  // ),
                 ],
               ),
             ),
           ),
           SizedBox(
-            height: 20.0,
+            height: 10.0,
+          ),
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: Color.fromARGB(200, 96, 94, 92),
           ),
           yourPostList(),
         ],

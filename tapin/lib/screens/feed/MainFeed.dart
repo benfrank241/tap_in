@@ -65,7 +65,7 @@ class _MainFeed extends State<MainFeed> {
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
-                      createdAt: thismodel['timestamp'].toDate().toString(),
+                      createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );
@@ -103,12 +103,15 @@ class _MainFeed extends State<MainFeed> {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.white, fontSize: 19),
                 ),
-                Text(
+                Container(
+                  width: 180,
+                child: Text(
                   '$createdAt',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                   maxLines: 1,
+                   overflow: TextOverflow.visible,
                   style: TextStyle(
                       color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
+                ),
                 ),
               ],
             ),

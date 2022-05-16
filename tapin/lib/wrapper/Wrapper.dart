@@ -15,6 +15,7 @@ class Wrapper {
     return FirebaseFirestore.instance
         .collection('users')
         .where('username', isEqualTo: Username)
+        // .where('username'.toLowerCase(), isEqualTo: Username.toLowerCase())
         .get();
   }
 
@@ -80,7 +81,7 @@ class Wrapper {
   getPostByContent(String Content) async {
     return await FirebaseFirestore.instance
         .collection('posts')
-        // .where('text', isEqualTo: Content)
+        //.where('text'.toLowerCase(), isGreaterThanOrEqualTo: Content.toLowerCase())
         //.orderBy('createdAt', descending: false)
         .where('text', isGreaterThanOrEqualTo: Content)
         .where('text', isLessThan: Content + 'z')

@@ -9,6 +9,8 @@ import '../../model/user_model.dart';
 import '../../wrapper/Wrapper.dart';
 import '../feed/LocalWidgets/Comments.dart';
 import '../userprofile/profile.dart';
+import 'package:intl/intl.dart';
+
 
 class Discover extends StatefulWidget {
   @override
@@ -24,6 +26,26 @@ class DiscoverState extends State<Discover> {
   UserModel? searchedUser;
 
   Stream? searchSnapshotPost;
+
+  String readTimestamp(int timestamp) {
+    var now = new DateTime.now();
+    var format = new DateFormat('HH:mm a');
+    var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+    var diff = date.difference(now);
+    var time = '';
+
+    if (diff.inSeconds <= 0 || diff.inSeconds > 0 && diff.inMinutes == 0 || diff.inMinutes > 0 && diff.inHours == 0 || diff.inHours > 0 && diff.inDays == 0) {
+      time = format.format(date);
+    } else {
+      if (diff.inDays == 1) {
+        time = diff.inDays.toString() + 'DAY AGO';
+      } else {
+        time = diff.inDays.toString() + 'DAYS AGO';
+      }
+    }
+
+    return time;
+  }
 
 //search User
 
@@ -108,8 +130,7 @@ class DiscoverState extends State<Discover> {
                       builder: (context) => SearchedProfileApp(
                         username: userName,
                       )));
-                }
-                ;
+                };
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -127,6 +148,7 @@ class DiscoverState extends State<Discover> {
   }
 
 //End Search User
+
 
 //Search Post
 
@@ -165,7 +187,7 @@ class DiscoverState extends State<Discover> {
                       return searchTilePost(
                         creator: thismodel['username'],
                         text: thismodel['text'],
-                        createdAt: thismodel['timestamp'].toDate().toString(),
+                        createdAt: thismodel['timestamp'].toDate().toString().substring(0,19),
                         id: snapshot.data.docs[index].id,
                         likes: thismodel['likes'],
                       );
@@ -206,7 +228,7 @@ class DiscoverState extends State<Discover> {
                 ),
                 Text(
                   '$createdAt',
-                  maxLines: 1,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Color.fromARGB(255, 148, 144, 141), fontSize: 15),
@@ -338,6 +360,7 @@ class DiscoverState extends State<Discover> {
                           "assets/images/search_white.png",
                           height: 25,
                           width: 25,
+                          color: Colors.black,
                         )),
                   ),
                 ],
