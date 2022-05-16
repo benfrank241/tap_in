@@ -109,14 +109,13 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: Drawer(
         backgroundColor: Color.fromARGB(255, 50, 50, 50),
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.only(top: 60),
           children: [
             const SizedBox(
-              height: 150,
+              height: 130,
               child: DrawerHeader(
                 child: Text(''),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 50, 50, 50),
                   image: DecorationImage(
                     image: AssetImage('assets/images/logo3.png'),
                     fit: BoxFit.fitWidth,

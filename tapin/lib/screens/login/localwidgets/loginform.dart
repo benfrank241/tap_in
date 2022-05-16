@@ -107,6 +107,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
                     onChanged: (bool? value) {
                       setState(() {
                         isChecked = value!;
+                        Fluttertoast.showToast(msg: 'To be implemented');
                       });
                     },
                   ),

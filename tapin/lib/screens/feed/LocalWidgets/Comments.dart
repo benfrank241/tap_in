@@ -72,7 +72,7 @@ class _CommentScreenState extends State<CommentScreen> {
                       createdAt: thismodel['timestamp']
                           .toDate()
                           .toString()
-                          .substring(0, 19),
+                      .substring(5,16),
                     );
                   })
               : Container();
@@ -143,7 +143,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   style: const TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
-                  '${widget.createdAt.substring(0, 19)}',
+                  '${widget.createdAt.substring(0, 11)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
