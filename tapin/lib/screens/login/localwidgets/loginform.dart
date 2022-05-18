@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tapin/helper/helperfunctions.dart';
 import 'package:tapin/model/user_model.dart';
@@ -259,10 +260,14 @@ class _OurLoginFormState extends State<OurLoginForm> {
   }
 
   Future GoogleLogin() async {
+    // try {
+    //   final googleSignIn = GoogleSignIn();
+    // } catch (e) {
+    //   print(e);
+    //   print('WHAT THE HELL HAPPENED');
+    // }
     final googleSignIn = GoogleSignIn();
-
     GoogleSignInAccount? _user;
-
     final googleUser = await googleSignIn.signIn();
     if (googleUser == null) return;
 

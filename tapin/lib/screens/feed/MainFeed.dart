@@ -287,7 +287,8 @@ class _MainFeed extends State<MainFeed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${FilterState}'), centerTitle: true, actions: [
+      appBar:
+          AppBar(title: Text('${FilterState}'), centerTitle: true, actions: [
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: GestureDetector(
