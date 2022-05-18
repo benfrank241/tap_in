@@ -94,7 +94,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
               setState(() {});
               validateButton();
             },
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
             cursorColor: Colors.grey,
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.alternate_email,
@@ -111,7 +111,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
               validateButton();
             },
             obscureText: true,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
             //autovalidateMode: AutovalidateMode.onUserInteraction,
             // validator: (value) {
             //   if (value == null || value.isEmpty) {
@@ -142,7 +142,7 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
               validateButton();
             },
             obscureText: true,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.white),
             cursorColor: Colors.grey,
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.lock_open,
