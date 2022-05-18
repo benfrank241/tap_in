@@ -88,9 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         toolbarHeight: 80,
         title: Container(
-          width: 90,
-          child: Image.asset('assets/images/icon.png'),
-        ),
+            width: 90,
+            child: GestureDetector(
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => mainRouter()))
+              },
+              child: Image.asset('assets/images/icon.png'),
+            )),
         actions: <Widget>[
           IconButton(
             iconSize: 40,

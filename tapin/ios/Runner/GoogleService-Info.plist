@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>626125982636-c7cf7agggpbjhrll47gob3sg56u4gr8t.apps.googleusercontent.com</string>
+	<string>626125982636-hbcvqbjbrbm6sd6ucfojacmqlic179ai.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.626125982636-c7cf7agggpbjhrll47gob3sg56u4gr8t</string>
+	<string>com.googleusercontent.apps.626125982636-hbcvqbjbrbm6sd6ucfojacmqlic179ai</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>626125982636-tl39nsqnt2df39smb4rajs43ecb5mdj1.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDEk2c5bH0yiyy2X_7VW_4TOJiwIa4mY3g</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.TapIn.tapin</string>
+	<string>com.tapInby.BBDP</string>
 	<key>PROJECT_ID</key>
 	<string>tap-in-287a6</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:626125982636:ios:f8284d597f86554e448809</string>
+	<string>1:626125982636:ios:a481420d875468f5448809</string>
 </dict>
 </plist>
