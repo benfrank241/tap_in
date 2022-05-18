@@ -11,7 +11,6 @@ import '../feed/LocalWidgets/Comments.dart';
 import '../userprofile/profile.dart';
 import 'package:intl/intl.dart';
 
-
 class Discover extends StatefulWidget {
   @override
   DiscoverState createState() => DiscoverState();
@@ -34,7 +33,10 @@ class DiscoverState extends State<Discover> {
     var diff = date.difference(now);
     var time = '';
 
-    if (diff.inSeconds <= 0 || diff.inSeconds > 0 && diff.inMinutes == 0 || diff.inMinutes > 0 && diff.inHours == 0 || diff.inHours > 0 && diff.inDays == 0) {
+    if (diff.inSeconds <= 0 ||
+        diff.inSeconds > 0 && diff.inMinutes == 0 ||
+        diff.inMinutes > 0 && diff.inHours == 0 ||
+        diff.inHours > 0 && diff.inDays == 0) {
       time = format.format(date);
     } else {
       if (diff.inDays == 1) {
@@ -89,11 +91,10 @@ class DiscoverState extends State<Discover> {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage:
-            AssetImage('assets/images/default.jpg'),
+            backgroundImage: AssetImage('assets/images/default.jpg'),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0, vertical: 22.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 22.0),
             ),
             radius: 23.0,
           ),
@@ -106,14 +107,14 @@ class DiscoverState extends State<Discover> {
                   '@$userName',
                   overflow: TextOverflow.clip,
                   maxLines: 1,
-                  style: const TextStyle(
-                      color: Colors.white, fontSize: 19),
+                  style: const TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
                   userEmail,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
                 ),
               ],
             ),
@@ -128,9 +129,10 @@ class DiscoverState extends State<Discover> {
                 } else {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => SearchedProfileApp(
-                        username: userName,
-                      )));
-                };
+                            username: userName,
+                          )));
+                }
+                ;
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -148,7 +150,6 @@ class DiscoverState extends State<Discover> {
   }
 
 //End Search User
-
 
 //Search Post
 
@@ -187,7 +188,10 @@ class DiscoverState extends State<Discover> {
                       return searchTilePost(
                         creator: thismodel['username'],
                         text: thismodel['text'],
-                        createdAt: thismodel['timestamp'].toDate().toString().substring(5,16),
+                        createdAt: thismodel['timestamp']
+                            .toDate()
+                            .toString()
+                            .substring(5, 16),
                         id: snapshot.data.docs[index].id,
                         likes: thismodel['likes'],
                       );
@@ -273,7 +277,7 @@ class DiscoverState extends State<Discover> {
                   //     borderRadius: BorderRadius.circular(40)),
                   //padding: EdgeInsets.all(12),
                   child: Image.asset(
-                    "assets/images/fire.png",
+                    'assets/images/fire_outline.png',
                     height: 25,
                     width: 25,
                   )),

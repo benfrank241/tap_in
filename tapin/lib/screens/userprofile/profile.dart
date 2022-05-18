@@ -7,6 +7,7 @@ import 'package:tapin/wrapper/Wrapper.dart';
 import '../../model/user_model.dart';
 import '../../widgets/tabbedwindow/UserSettingsTabbed.dart';
 import '../feed/LocalWidgets/Comments.dart';
+import '../mainrouter/mainrouter.dart';
 
 void main() => runApp(MaterialApp(
       home: ProfileApp(),
@@ -73,7 +74,10 @@ class _ProfileAppState extends State<ProfileApp> {
                     return FeedPostTile(
                       creator: thismodel['username'],
                       text: thismodel['text'],
-                      createdAt: thismodel['timestamp'].toDate().toString().substring(5,16),
+                      createdAt: thismodel['timestamp']
+                          .toDate()
+                          .toString()
+                          .substring(5, 16),
                       likes: thismodel['likes'],
                       id: snapshot.data.docs[index].id,
                     );
@@ -158,12 +162,15 @@ class _ProfileAppState extends State<ProfileApp> {
                   //     borderRadius: BorderRadius.circular(40)),
                   //padding: EdgeInsets.all(12),
                   child: Image.asset(
-                    "assets/images/fire.png",
+                    "assets/images/fire_outline.png",
                     height: 25,
                     width: 25,
                   )),
             ),
-            Text('$likes', style: TextStyle(color: Colors.white),),
+            Text(
+              '$likes',
+              style: TextStyle(color: Colors.white),
+            ),
           ]),
         ],
       ),
@@ -176,9 +183,14 @@ class _ProfileAppState extends State<ProfileApp> {
         centerTitle: true,
         toolbarHeight: 80,
         title: Container(
-          width: 90,
-          child: Image.asset('assets/images/icon.png'),
-        ),
+            width: 90,
+            child: GestureDetector(
+              onTap: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => mainRouter()))
+              },
+              child: Image.asset('assets/images/icon.png'),
+            )),
         actions: <Widget>[
           IconButton(
             iconSize: 40,
@@ -225,8 +237,7 @@ class _ProfileAppState extends State<ProfileApp> {
                             fillColor: Color.fromARGB(255, 255, 183, 255),
                             shape: CircleBorder(),
                             child: Icon(Icons.add_a_photo,
-                              color: Colors.black,
-                              size: 18),
+                                color: Colors.black, size: 18),
                             onPressed: () {
                               Fluttertoast.showToast(msg: 'To be implemented');
                             },
@@ -287,7 +298,7 @@ class _ProfileAppState extends State<ProfileApp> {
                     padding: EdgeInsets.all(0.0),
                     child: Container(
                       constraints:
-                      BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
+                          BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
                       alignment: Alignment.center,
                       child: Text(
                         "Comments",
@@ -298,7 +309,6 @@ class _ProfileAppState extends State<ProfileApp> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
