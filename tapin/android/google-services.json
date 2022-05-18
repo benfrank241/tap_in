@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:626125982636:android:aff01660083a7b7f448809",
+        "mobilesdk_app_id": "1:626125982636:android:182d5cabd862fb94448809",
         "android_client_info": {
-          "package_name": "com.TapIn.tapin"
+          "package_name": "com.tapinplatform.bybbdp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "626125982636-tl39nsqnt2df39smb4rajs43ecb5mdj1.apps.googleusercontent.com",
+          "client_id": "626125982636-eh86rg5n61l4ii1qkael08olr056o1hi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.TapIn.tapin",
+            "package_name": "com.tapinplatform.bybbdp",
             "certificate_hash": "9e6f72a46b0663619f4bb4f29840cf93e40f3c6a"
           }
         },
@@ -35,50 +35,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "626125982636-vbiu1kegc6mk39hq3fcd0q5hle0ildqk.apps.googleusercontent.com",
+              "client_id": "626125982636-92v1o2dqac11256g21l0pofjiqhv4ks6.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "626125982636-c7cf7agggpbjhrll47gob3sg56u4gr8t.apps.googleusercontent.com",
+              "client_id": "626125982636-1uksjqshsd1r0dupbcpi9o10nu88pq7s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.TapIn.tapin"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:626125982636:android:6ac0ee38092d1922448809",
-        "android_client_info": {
-          "package_name": "com.tapInby.BBDP"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "626125982636-vbiu1kegc6mk39hq3fcd0q5hle0ildqk.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA-Kc7Yk7ZVQzzbLiBN1jm0rybpV0cWAUw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "626125982636-vbiu1kegc6mk39hq3fcd0q5hle0ildqk.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "626125982636-c7cf7agggpbjhrll47gob3sg56u4gr8t.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.TapIn.tapin"
+                "bundle_id": "com.tapinplatform.bybbdp"
               }
             }
           ]
