@@ -96,7 +96,49 @@ class _MainFeed extends State<MainFeed> {
         Row(
           children: [
             Expanded(
-              child: GestureDetector(
+              child:
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) =>
+                  //                 CommentScreen(creator, text, createdAt, id)));
+                  //   },
+                  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '@$creator',
+                    overflow: TextOverflow.clip,
+                    maxLines: 1,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 148, 144, 141),
+                        fontSize: 18),
+                  ),
+                  Text(
+                    text,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white, fontSize: 19),
+                  ),
+                  Container(
+                    width: 180,
+                    child: Text(
+                      '$createdAt',
+                      maxLines: 1,
+                      overflow: TextOverflow.visible,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 148, 144, 141),
+                          fontSize: 15),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            //Spacer(),
+            Row(children: [
+              GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -104,57 +146,15 @@ class _MainFeed extends State<MainFeed> {
                           builder: (context) =>
                               CommentScreen(creator, text, createdAt, id)));
                 },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '@$creator',
-                      overflow: TextOverflow.clip,
-                      maxLines: 1,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 148, 144, 141),
-                          fontSize: 18),
-                    ),
-                    Text(
-                      text,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Colors.white, fontSize: 19),
-                    ),
-                    Container(
-                      width: 180,
-                      child: Text(
-                        '$createdAt',
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 148, 144, 141),
-                            fontSize: 15),
-                      ),
-                    ),
-                  ],
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 37, 237, 160),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Text('Tap In', style: TextStyle(fontSize: 16)),
                 ),
               ),
-            ),
-            //Spacer(),
-            Row(children: [
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) =>
-              //                 CommentScreen(creator, text, createdAt, id)));
-              //   },
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       color: Color.fromARGB(255, 37, 237, 160),
-              //       borderRadius: BorderRadius.circular(30),
-              //     ),
-              //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              //     child: Text('Tap In', style: TextStyle(fontSize: 16)),
-              //   ),
-              // ),
               GestureDetector(
                 onTap: () {
                   addLike(id, likes);

@@ -52,13 +52,12 @@ class DiscoverState extends State<Discover> {
 
 //search User
 
-  initiateSearch() {
+  initiateSearch() async {
     if (searchTextEdittingController != '') {
       String thisString = searchTextEdittingController.text.replaceAll('@', '');
       Wrapper().getUserByUsername(thisString).then((val) {
         setState(() {
           searchSnapshot = val;
-          searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
           searchSnapshotPost = null;
         });
       });
@@ -67,21 +66,17 @@ class DiscoverState extends State<Discover> {
       searchSnapshot = null;
       searchedUser = null;
     }
-
-    if (searchSnapshot == null) {
-      Fluttertoast.showToast(
-          msg: 'No users found \n *Usernames are case senstive*');
-    }
   }
 
   Widget searchList() {
-    return searchedUser != null
+    return searchSnapshot != null
         ? ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemCount: searchSnapshot?.docs.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               //print(searchedUser?.username);
+              searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
               return searchTile(
                 userName: searchedUser?.username ?? '',
                 userEmail: searchedUser?.email ?? '',
