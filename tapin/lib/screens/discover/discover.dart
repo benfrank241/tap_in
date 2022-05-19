@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tapin/Constants.dart';
 import 'package:tapin/screens/mainrouter/mainrouter.dart';
 import 'package:tapin/screens/userprofile/searchedProfile.dart';
@@ -65,6 +66,11 @@ class DiscoverState extends State<Discover> {
       searchSnapshotPost = null;
       searchSnapshot = null;
       searchedUser = null;
+    }
+
+    if (searchSnapshot == null) {
+      Fluttertoast.showToast(
+          msg: 'No users found \n *Usernames are case senstive*');
     }
   }
 
@@ -168,6 +174,11 @@ class DiscoverState extends State<Discover> {
         searchSnapshot = null;
         searchedUser = null;
       });
+    }
+
+    if (searchSnapshotPost == null) {
+      Fluttertoast.showToast(
+          msg: 'No Posts found \n *Posts are case senstive*');
     }
   }
 
