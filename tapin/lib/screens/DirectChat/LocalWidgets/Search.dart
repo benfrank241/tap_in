@@ -27,6 +27,11 @@ class _searchScreenState extends State<searchScreen> {
         searchedUser = UserModel.fromMap(searchSnapshot?.docs[0].data());
       });
     });
+
+    if (searchSnapshot == null) {
+      Fluttertoast.showToast(
+          msg: 'No users found \n *Usernames are case senstive*');
+    }
   }
 
   Widget searchList() {
@@ -87,11 +92,10 @@ class _searchScreenState extends State<searchScreen> {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage:
-            AssetImage('assets/images/default.jpg'),
+            backgroundImage: AssetImage('assets/images/default.jpg'),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0, vertical: 22.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 22.0),
             ),
             radius: 23.0,
           ),
@@ -104,14 +108,14 @@ class _searchScreenState extends State<searchScreen> {
                   '@$userName',
                   overflow: TextOverflow.clip,
                   maxLines: 1,
-                  style: const TextStyle(
-                      color: Colors.white, fontSize: 19),
+                  style: const TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 Text(
                   userEmail,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 16),
                 ),
               ],
             ),
