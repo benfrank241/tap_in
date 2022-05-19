@@ -24,12 +24,11 @@ class _ConversationState extends State<ConversationScreen> {
   String ConvertChatId() {
     String id = widget.chatroomId;
     List<String> ids = id.split("_");
-    if (ids[0] == Constants.myName){
+    if (ids[0] == Constants.myName) {
       return ids[1];
     }
     return ids[0];
   }
-
 
   Widget ChatMessageList() {
     return StreamBuilder(
@@ -37,8 +36,8 @@ class _ConversationState extends State<ConversationScreen> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return snapshot.hasData
               ? ListView.builder(
-            padding: EdgeInsets.only(bottom: 80),
-            controller: listScrollController,
+                  padding: EdgeInsets.only(bottom: 80),
+                  controller: listScrollController,
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     chatModel thismodel =
@@ -94,7 +93,10 @@ class _ConversationState extends State<ConversationScreen> {
         },
         isExtended: true,
         tooltip: "Scroll to Bottom",
-        child: Icon(Icons.arrow_downward, color: Colors.black,),
+        child: Icon(
+          Icons.arrow_downward,
+          color: Colors.black,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       body: Stack(
@@ -110,6 +112,7 @@ class _ConversationState extends State<ConversationScreen> {
                   Expanded(
                       child: TextField(
                     controller: messageController,
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: 'Message',
                       hintStyle: TextStyle(
@@ -171,8 +174,14 @@ class messageTile extends StatelessWidget {
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: isSendbyMe
-                    ? [const Color.fromARGB(255, 37, 237, 160), const Color.fromARGB(255, 37, 237, 160)]
-                    : [const Color.fromARGB(255, 255, 183, 255), Color.fromARGB(255, 255, 183, 255)]),
+                    ? [
+                        const Color.fromARGB(255, 37, 237, 160),
+                        const Color.fromARGB(255, 37, 237, 160)
+                      ]
+                    : [
+                        const Color.fromARGB(255, 255, 183, 255),
+                        Color.fromARGB(255, 255, 183, 255)
+                      ]),
             borderRadius: isSendbyMe
                 ? BorderRadius.only(
                     topLeft: Radius.circular(23),

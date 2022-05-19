@@ -44,14 +44,19 @@ class OurSignup extends StatelessWidget {
                     RawMaterialButton(
                       fillColor: Color.fromARGB(255, 255, 183, 255),
                       shape: CircleBorder(),
-                      child: Icon(Icons.add_a_photo,
-                          color: Colors.black,
-                        size: 18,),
+                      child: Icon(
+                        Icons.add_a_photo,
+                        color: Colors.black,
+                        size: 18,
+                      ),
                       onPressed: () {
                         Fluttertoast.showToast(msg: 'To be implemented');
                       },
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 100.0,
                 ),
                 OurSignUpForm(),
               ],

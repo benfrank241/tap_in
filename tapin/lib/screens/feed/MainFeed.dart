@@ -92,88 +92,107 @@ class _MainFeed extends State<MainFeed> {
       required String id}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '@$creator',
-                  overflow: TextOverflow.clip,
-                  maxLines: 1,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 148, 144, 141), fontSize: 18),
+      child: Column(children: [
+        Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CommentScreen(creator, text, createdAt, id)));
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '@$creator',
+                      overflow: TextOverflow.clip,
+                      maxLines: 1,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 148, 144, 141),
+                          fontSize: 18),
+                    ),
+                    Text(
+                      text,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white, fontSize: 19),
+                    ),
+                    Container(
+                      width: 180,
+                      child: Text(
+                        '$createdAt',
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 148, 144, 141),
+                            fontSize: 15),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  text,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontSize: 19),
-                ),
-                Container(
-                  width: 180,
-                  child: Text(
-                    '$createdAt',
-                    maxLines: 1,
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 148, 144, 141),
-                        fontSize: 15),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //Spacer(),
-          Row(children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CommentScreen(creator, text, createdAt, id)));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 37, 237, 160),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Text('Tap In', style: TextStyle(fontSize: 16)),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                addLike(id, likes);
-              },
-              child: Container(
-                  height: 40,
-                  width: 40,
-                  // decoration: BoxDecoration(
-                  //     gradient: LinearGradient(
-                  //         colors: [
-                  //           Color.fromARGB(54, 255, 255, 255),
-                  //           Color.fromARGB(255, 255, 255, 255)
-                  //         ],
-                  //         begin: FractionalOffset.topLeft,
-                  //         end: FractionalOffset.bottomRight),
-                  //     borderRadius: BorderRadius.circular(40)),
-                  // padding: EdgeInsets.all(12),
-                  child: Image.asset(
-                    "assets/images/fire.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
-            Text(
-              '$likes',
-              style: const TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          ]),
-        ],
-      ),
+            //Spacer(),
+            Row(children: [
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) =>
+              //                 CommentScreen(creator, text, createdAt, id)));
+              //   },
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: Color.fromARGB(255, 37, 237, 160),
+              //       borderRadius: BorderRadius.circular(30),
+              //     ),
+              //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              //     child: Text('Tap In', style: TextStyle(fontSize: 16)),
+              //   ),
+              // ),
+              GestureDetector(
+                onTap: () {
+                  addLike(id, likes);
+                },
+                child: Container(
+                    height: 40,
+                    width: 40,
+                    // decoration: BoxDecoration(
+                    //     gradient: LinearGradient(
+                    //         colors: [
+                    //           Color.fromARGB(54, 255, 255, 255),
+                    //           Color.fromARGB(255, 255, 255, 255)
+                    //         ],
+                    //         begin: FractionalOffset.topLeft,
+                    //         end: FractionalOffset.bottomRight),
+                    //     borderRadius: BorderRadius.circular(40)),
+                    // padding: EdgeInsets.all(12),
+                    child: Image.asset(
+                      "assets/images/fire.png",
+                      height: 25,
+                      width: 25,
+                    )),
+              ),
+              Text(
+                '$likes',
+                style: const TextStyle(color: Colors.white, fontSize: 15),
+              ),
+            ]),
+          ],
+        ),
+        const Divider(
+          height: 30,
+          thickness: 2,
+          indent: 0,
+          endIndent: 0,
+          color: Color.fromARGB(255, 45, 45, 45),
+        ),
+      ]),
     );
   }
 

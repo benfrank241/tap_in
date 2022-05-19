@@ -9,6 +9,9 @@ class OurLogin extends StatelessWidget {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          // SizedBox(
+          //   height: 10.0,
+          // ),
           Expanded(
             child: ListView(
               physics:
@@ -16,14 +19,14 @@ class OurLogin extends StatelessWidget {
               padding: EdgeInsets.all(25.0),
               children: <Widget>[
                 SizedBox(
-                  height: 60.0,
+                  height: 100.0,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(30.0),
                   child: Image.asset("assets/images/logo3.png"),
                 ),
                 SizedBox(
-                  height: 50.0,
+                  height: 100.0,
                 ),
                 OurLoginForm(),
               ],
