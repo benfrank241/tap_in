@@ -56,7 +56,7 @@ class OurSignup extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 100.0,
+                  height: 30.0,
                 ),
                 OurSignUpForm(),
               ],
