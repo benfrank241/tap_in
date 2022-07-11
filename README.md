@@ -9,4 +9,4 @@ Product Final Design (Figma): https://www.figma.com/file/B9X4AYrrKVlUwRQlCaFF4p/
 Slide Deck: https://www.canva.com/design/DAFBvydlaQ4/y0XgY2ly8f_-ZLXHLXk8dQ/view?utm_content=DAFBvydlaQ4&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
 
 
-Localized personal social media mobile app. Functional in both Andriod and IOS. Co-created by @benfrank241 (Ben Bartholomew) & @DK09876 (DK Pradhan).
+Localized personal social media mobile app. Functional in both Android and IOS. Co-created by @benfrank241 (Ben Bartholomew) & @DK09876 (DK Pradhan).
